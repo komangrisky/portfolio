@@ -42,3 +42,51 @@ id = "yHLVke8tqQCG6UIS9_SQZ"
 uri = "file://artifacts/portfolio/src/assets/images/about.png"
 type = "image"
 title = "Creative freelancer photographer portrait"
+
+[[generated]]
+id = "CFXb4JMRj6-6dz1S9ipd0"
+uri = "file://artifacts/portfolio/src/assets/images/hero-portrait.png"
+type = "image"
+title = "Young professional photographer portrait"
+
+[[generated]]
+id = "QS4gbo81MVYgxFjRke07Y"
+uri = "file://artifacts/portfolio/src/assets/images/proj-portrait.png"
+type = "image"
+title = "Moody portrait photography project"
+
+[[generated]]
+id = "xN3dVXXonPJMb6u_6LjOv"
+uri = "file://artifacts/portfolio/src/assets/images/proj-commercial.png"
+type = "image"
+title = "Commercial product photography"
+
+[[generated]]
+id = "3pujI-DnfBCCW0l2ZXjFT"
+uri = "file://artifacts/portfolio/src/assets/images/proj-urban.png"
+type = "image"
+title = "Urban street photography"
+
+[[generated]]
+id = "EmoX_7moiax4VprjomkXM"
+uri = "file://artifacts/portfolio/src/assets/images/proj-cinematic.png"
+type = "image"
+title = "Cinematic brand video still"
+
+[[generated]]
+id = "_k0f8648YhJ-vLN083wN_"
+uri = "file://artifacts/portfolio/src/assets/images/proj-wedding.png"
+type = "image"
+title = "Wedding event photography"
+
+[[generated]]
+id = "v534DruGvuGii-n4WKrsH"
+uri = "file://artifacts/portfolio/src/assets/images/proj-landscape.png"
+type = "image"
+title = "Landscape travel photography"
+
+[[generated]]
+id = "nhAUZ5-vwIDw3vWcCDMKU"
+uri = "file://artifacts/portfolio/src/assets/images/avatar.png"
+type = "image"
+title = "Small circular avatar photo"
