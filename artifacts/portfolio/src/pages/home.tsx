@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Instagram, Linkedin, Youtube } from "lucide-react";
 
-import heroPortrait from "@/assets/images/hero-portrait.png";
+import heroPortrait from "@/assets/images/hero-portrait.jpg";
 import projPortrait from "@/assets/images/proj-portrait.png";
 import projCommercial from "@/assets/images/proj-commercial.png";
 import projUrban from "@/assets/images/proj-urban.png";
@@ -67,39 +67,48 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-24 md:pt-48 md:pb-32 px-6 md:px-12 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <motion.div 
+      {/* Hero Section — Duwy-style layout */}
+      <section className="relative min-h-[90vh] px-6 md:px-12 max-w-[1400px] mx-auto flex flex-col justify-between pt-24 pb-12 md:pt-28 md:pb-16">
+
+        {/* Photo — top right, floating */}
+        <div className="flex justify-end">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.9, ease: "easeOut" } }}
+            className="w-[200px] md:w-[260px] lg:w-[300px]"
+          >
+            <div className="aspect-[3/4] overflow-hidden bg-muted">
+              <img src={heroPortrait} alt="Mang Risky" className="w-full h-full object-cover object-top" />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Bottom row — headline left, bio right */}
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="flex flex-col justify-center"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mt-8"
         >
-          <motion.h1 variants={fadeUp} className="font-sans text-6xl md:text-8xl lg:text-[7rem] leading-[0.95] tracking-tight mb-6">
-            Creative <br /> Freelancer
+          <motion.h1
+            variants={fadeUp}
+            className="font-sans font-light text-[14vw] md:text-[12vw] lg:text-[11vw] leading-[0.88] tracking-tight"
+          >
+            Creative<br />Freelancer
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-xl md:text-2xl text-muted-foreground font-light mb-8">
-            Photography & Videography
-          </motion.p>
-          <motion.p variants={fadeUp} className="text-sm leading-relaxed text-muted-foreground mb-8 max-w-sm">
-            Hi, I'm Mang Risky, a Creative Freelancer specializing in Photography & Videography. Available for projects worldwide.
-          </motion.p>
-          <motion.div variants={fadeUp} className="flex gap-4 items-center">
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foreground opacity-20"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-foreground"></span>
-            </span>
-            <span className="text-sm font-medium uppercase tracking-wider">Available for work</span>
-          </motion.div>
-        </motion.div>
 
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
-        >
-          <div className="aspect-square w-full overflow-hidden bg-muted">
-            <img src={heroPortrait} alt="Mang Risky" className="w-full h-full object-cover object-top filter grayscale" />
-          </div>
+          <motion.div variants={fadeUp} className="md:text-right md:max-w-[240px] shrink-0 pb-2">
+            <p className="text-sm leading-relaxed text-muted-foreground mb-4">
+              Hi, I'm Mang Risky, a Creative Freelancer specializing in Photography & Videography. Available for projects worldwide.
+            </p>
+            <div className="flex md:justify-end gap-3 items-center">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foreground opacity-20"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-foreground"></span>
+              </span>
+              <span className="text-xs font-medium uppercase tracking-wider">Available for work</span>
+            </div>
+          </motion.div>
         </motion.div>
       </section>
 
