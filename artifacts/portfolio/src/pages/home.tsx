@@ -1,6 +1,6 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { ArrowRight, Instagram, Linkedin, Youtube } from "lucide-react";
+import { useRef, useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { ArrowRight, Instagram, Linkedin, Youtube, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 import heroPortrait from "@/assets/images/hero-portrait.jpg";
 import projPortrait from "@/assets/images/proj-portrait.png";
@@ -46,9 +46,141 @@ function Reveal({ children, className = "", delay = 0 }: { children: React.React
   );
 }
 
+type Service = {
+  title: string;
+  description: string;
+  images: string[];
+  dark: boolean;
+};
+
+function ServiceModal({ service, onClose }: { service: Service; onClose: () => void }) {
+  const [current, setCurrent] = useState(0);
+  const prev = () => setCurrent(i => (i - 1 + service.images.length) % service.images.length);
+  const next = () => setCurrent(i => (i + 1) % service.images.length);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="bg-background w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Modal Header */}
+        <div className="flex justify-between items-center p-6 md:p-8 border-b border-border">
+          <h2 className="text-2xl md:text-3xl font-sans font-semibold">{service.title}</h2>
+          <button onClick={onClose} className="p-2 hover:bg-muted transition-colors" data-testid="button-close-modal">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Main Image Viewer */}
+        <div className="relative bg-muted aspect-video overflow-hidden">
+          {service.images.length > 0 ? (
+            <>
+              <img
+                src={service.images[current]}
+                alt={`${service.title} work ${current + 1}`}
+                className="w-full h-full object-cover"
+              />
+              {service.images.length > 1 && (
+                <>
+                  <button onClick={prev} className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/80 p-2 hover:bg-background transition-colors" data-testid="button-prev-image">
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button onClick={next} className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/80 p-2 hover:bg-background transition-colors" data-testid="button-next-image">
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                    {service.images.map((_, i) => (
+                      <button key={i} onClick={() => setCurrent(i)} className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-foreground" : "bg-foreground/30"}`} />
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center gap-4 text-muted-foreground p-8 text-center">
+              <div className="text-6xl">🖼️</div>
+              <p className="text-lg font-medium">Karya segera hadir</p>
+              <p className="text-sm">File karya kamu untuk kategori ini belum ditambahkan. Lampirkan gambar karya kamu di chat dan saya akan pasangkan di sini.</p>
+            </div>
+          )}
+        </div>
+
+        {/* Thumbnail Strip */}
+        {service.images.length > 1 && (
+          <div className="flex gap-3 p-6 overflow-x-auto">
+            {service.images.map((img, i) => (
+              <button key={i} onClick={() => setCurrent(i)} className={`shrink-0 w-20 h-20 overflow-hidden border-2 transition-colors ${i === current ? "border-foreground" : "border-transparent"}`} data-testid={`button-thumbnail-${i}`}>
+                <img src={img} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Description */}
+        <div className="p-6 md:p-8 pt-0">
+          <p className="text-muted-foreground text-lg leading-relaxed">{service.description}</p>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function Home() {
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+
+  const services: Service[] = [
+    {
+      title: "Graphic Design",
+      description: "Creating impactful visuals and meaningful digital experiences that combine creativity and strategy.",
+      images: [],
+      dark: false,
+    },
+    {
+      title: "Social Media Design",
+      description: "Eye-catching social media content and templates designed to grow engagement and strengthen brand presence.",
+      images: [],
+      dark: true,
+    },
+    {
+      title: "Branding & Logo",
+      description: "Strategic brand identity design — from logo creation to full visual systems that make brands memorable.",
+      images: [],
+      dark: true,
+    },
+    {
+      title: "Photography",
+      description: "Professional photography capturing authentic moments and compelling visuals for brands and individuals.",
+      images: [],
+      dark: false,
+    },
+    {
+      title: "Video Editing",
+      description: "Cinematic video editing and post-production that tells compelling visual stories with lasting impact.",
+      images: [],
+      dark: false,
+    },
+  ];
+
   return (
     <div className="bg-background min-h-screen text-foreground selection:bg-foreground selection:text-background font-sans">
+
+      {/* Service Modal */}
+      <AnimatePresence>
+        {selectedService && (
+          <ServiceModal service={selectedService} onClose={() => setSelectedService(null)} />
+        )}
+      </AnimatePresence>
       
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border px-6 py-5 flex justify-between items-center text-sm font-medium">
@@ -162,50 +294,37 @@ export default function Home() {
           </h2>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Light Card 1 */}
-          <Reveal delay={0.1}>
-            <div className="bg-card border border-border p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
-              <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-sans">Graphic<br />Design</h3>
-                <ArrowRight className="w-6 h-6" />
-              </div>
-              <p className="text-muted-foreground text-lg">Creating impactful visuals and meaningful digital experiences that combine creativity and strategy.</p>
-            </div>
-          </Reveal>
-
-          {/* Dark Card 1 */}
-          <Reveal delay={0.2}>
-            <div className="bg-foreground text-background p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
-              <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-sans">Photo<br />Editing</h3>
-                <ArrowRight className="w-6 h-6" />
-              </div>
-              <p className="text-background/70 text-lg">Professional photo retouching and color grading that elevates every frame to its full potential.</p>
-            </div>
-          </Reveal>
-
-          {/* Dark Card 2 */}
-          <Reveal delay={0.3}>
-            <div className="bg-foreground text-background p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
-              <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-sans">Video<br />Editing</h3>
-                <ArrowRight className="w-6 h-6" />
-              </div>
-              <p className="text-background/70 text-lg">Cinematic video editing and post-production that tells compelling visual stories with impact.</p>
-            </div>
-          </Reveal>
-
-          {/* Light Card 2 */}
-          <Reveal delay={0.4}>
-            <div className="bg-card border border-border p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
-              <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-sans">AI<br />Specialist</h3>
-                <ArrowRight className="w-6 h-6" />
-              </div>
-              <p className="text-muted-foreground text-lg">Expanding into Artificial Intelligence to blend modern technology with creative digital innovation.</p>
-            </div>
-          </Reveal>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, i) => (
+            <Reveal key={service.title} delay={i * 0.1}>
+              <button
+                onClick={() => setSelectedService(service)}
+                data-testid={`button-service-${i}`}
+                className={`w-full text-left p-8 md:p-10 flex flex-col justify-between min-h-[260px] group transition-all duration-300 hover:scale-[1.02] ${
+                  service.dark
+                    ? "bg-foreground text-background"
+                    : "bg-card border border-border text-foreground"
+                }`}
+              >
+                <div className="flex justify-between items-start mb-10">
+                  <h3 className={`text-2xl md:text-3xl font-sans leading-tight ${service.dark ? "text-background" : "text-foreground"}`}>
+                    {service.title.split(" ").map((word, wi) => (
+                      <span key={wi}>{word}<br /></span>
+                    ))}
+                  </h3>
+                  <ArrowRight className={`w-5 h-5 group-hover:translate-x-1 transition-transform duration-200 ${service.dark ? "text-background" : "text-foreground"}`} />
+                </div>
+                <div>
+                  <p className={`text-sm leading-relaxed mb-4 ${service.dark ? "text-background/70" : "text-muted-foreground"}`}>
+                    {service.description}
+                  </p>
+                  <span className={`text-xs font-medium uppercase tracking-wider ${service.dark ? "text-background/50" : "text-muted-foreground/70"}`}>
+                    View Work →
+                  </span>
+                </div>
+              </button>
+            </Reveal>
+          ))}
         </div>
       </section>
 
