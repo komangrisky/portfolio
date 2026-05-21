@@ -99,8 +99,8 @@ export default function Home() {
           <div className="bg-muted p-6 text-sm leading-relaxed text-foreground border border-border">
             Hi, I'm Mang Risky, a Creative Freelancer specializing in Photography & Videography. Available for projects worldwide.
           </div>
-          <div className="aspect-[3/4] w-full overflow-hidden bg-muted">
-            <img src={heroPortrait} alt="Mang Risky" className="w-full h-full object-cover filter grayscale" />
+          <div className="aspect-square w-full overflow-hidden bg-muted">
+            <img src={heroPortrait} alt="Mang Risky" className="w-full h-full object-cover object-top filter grayscale" />
           </div>
         </motion.div>
       </section>
