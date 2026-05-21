@@ -340,8 +340,9 @@ export default function Home() {
           </div>
           <div className="lg:col-span-7 flex flex-col">
             {[
-              { role: "Graphic Design", year: "2020 - Now" },
-              { role: "Branding Logo Design", year: "2020 - Now" },
+              { role: "Graphic Design", year: "2021 - Now" },
+              { role: "Social Media Design", year: "2021 - Now" },
+              { role: "Branding & Logo Design", year: "2024 - Now" },
               { role: "Freelance Photographer", year: "2023 - 2025" },
               { role: "Video Editor", year: "2024 - Now" }
             ].map((item, i) => (
