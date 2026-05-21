@@ -75,7 +75,7 @@ export default function Home() {
           variants={staggerContainer}
           className="lg:col-span-8 flex flex-col justify-center"
         >
-          <motion.h1 variants={fadeUp} className="font-serif text-6xl md:text-8xl lg:text-[7rem] leading-[0.95] tracking-tight mb-6">
+          <motion.h1 variants={fadeUp} className="font-sans text-6xl md:text-8xl lg:text-[7rem] leading-[0.95] tracking-tight mb-6">
             Creative <br /> Freelancer
           </motion.h1>
           <motion.p variants={fadeUp} className="text-xl md:text-2xl text-muted-foreground font-light mb-12">
@@ -111,7 +111,7 @@ export default function Home() {
           <p className="text-sm font-medium uppercase tracking-wider text-muted-foreground whitespace-nowrap">Trusted By</p>
           <div className="flex-1 w-full flex flex-wrap justify-center md:justify-between items-center gap-8 md:gap-12 opacity-60">
             {["Tokopedia", "Grab", "Gojek", "Shopee", "Traveloka", "Telkom"].map((brand, i) => (
-              <span key={i} className="text-xl md:text-2xl font-serif font-bold tracking-wide">{brand}</span>
+              <span key={i} className="text-xl md:text-2xl font-sans font-bold tracking-wide">{brand}</span>
             ))}
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function Home() {
       <section id="about" className="py-24 px-6 md:px-12 max-w-[1400px] mx-auto border-b border-border">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           <Reveal>
-            <h2 className="text-3xl md:text-4xl font-serif mb-8">About Me</h2>
+            <h2 className="text-3xl md:text-4xl font-sans mb-8">About Me</h2>
             <div className="space-y-6 text-muted-foreground text-lg leading-relaxed font-light">
               <p>
                 I am a visual storyteller with a passion for finding beauty in the everyday. My journey in photography and videography is rooted in the belief that every frame should evoke an emotion.
@@ -134,12 +134,12 @@ export default function Home() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 lg:border-l lg:border-border lg:pl-16">
             <Reveal delay={0.1} className="flex flex-col gap-2">
-              <span className="font-serif text-7xl md:text-8xl font-bold">+50</span>
+              <span className="font-sans text-7xl md:text-8xl font-bold">+50</span>
               <span className="text-lg font-medium">Projects Completed</span>
               <span className="text-sm text-muted-foreground">Across various industries globally.</span>
             </Reveal>
             <Reveal delay={0.2} className="flex flex-col gap-2">
-              <span className="font-serif text-7xl md:text-8xl font-bold">+30</span>
+              <span className="font-sans text-7xl md:text-8xl font-bold">+30</span>
               <span className="text-lg font-medium">Happy Clients</span>
               <span className="text-sm text-muted-foreground">Building long-lasting creative partnerships.</span>
             </Reveal>
@@ -150,7 +150,7 @@ export default function Home() {
       {/* Services Section */}
       <section id="services" className="py-24 px-6 md:px-12 max-w-[1400px] mx-auto border-b border-border">
         <Reveal className="mb-16 md:mb-24">
-          <h2 className="text-3xl md:text-5xl font-serif max-w-2xl leading-tight">
+          <h2 className="text-3xl md:text-5xl font-sans max-w-2xl leading-tight">
             A Comprehensive look at what we offer and how we deliver
           </h2>
         </Reveal>
@@ -160,7 +160,7 @@ export default function Home() {
           <Reveal delay={0.1}>
             <div className="bg-card border border-border p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
               <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-serif">Portrait<br />Photography</h3>
+                <h3 className="text-2xl md:text-3xl font-sans">Portrait<br />Photography</h3>
                 <ArrowRight className="w-6 h-6" />
               </div>
               <p className="text-muted-foreground text-lg">Intimate and raw portraiture capturing true character with an editorial finish.</p>
@@ -171,7 +171,7 @@ export default function Home() {
           <Reveal delay={0.2}>
             <div className="bg-foreground text-background p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
               <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-serif">Commercial<br />Photography</h3>
+                <h3 className="text-2xl md:text-3xl font-sans">Commercial<br />Photography</h3>
                 <ArrowRight className="w-6 h-6" />
               </div>
               <p className="text-background/70 text-lg">Meticulous staging and elegant lighting that elevates brands and products.</p>
@@ -182,7 +182,7 @@ export default function Home() {
           <Reveal delay={0.3}>
             <div className="bg-foreground text-background p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
               <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-serif">Cinematic<br />Videography</h3>
+                <h3 className="text-2xl md:text-3xl font-sans">Cinematic<br />Videography</h3>
                 <ArrowRight className="w-6 h-6" />
               </div>
               <p className="text-background/70 text-lg">Narrative-driven visual storytelling with a moody, cinematic atmosphere.</p>
@@ -193,7 +193,7 @@ export default function Home() {
           <Reveal delay={0.4}>
             <div className="bg-card border border-border p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
               <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-serif">Brand Video<br />Production</h3>
+                <h3 className="text-2xl md:text-3xl font-sans">Brand Video<br />Production</h3>
                 <ArrowRight className="w-6 h-6" />
               </div>
               <p className="text-muted-foreground text-lg">Full-scale video production to craft compelling visual brand identities.</p>
@@ -207,7 +207,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8">
           <div className="lg:col-span-5">
             <Reveal>
-              <h2 className="text-3xl md:text-4xl font-serif max-w-sm leading-tight sticky top-32">
+              <h2 className="text-3xl md:text-4xl font-sans max-w-sm leading-tight sticky top-32">
                 A Yearly snapshot of my creative growth
               </h2>
             </Reveal>
@@ -221,7 +221,7 @@ export default function Home() {
             ].map((item, i) => (
               <Reveal key={i} delay={i * 0.1}>
                 <div className="py-8 border-b border-border flex justify-between items-center group cursor-default">
-                  <h3 className="text-xl md:text-2xl font-serif group-hover:pl-4 transition-all duration-300">{item.role}</h3>
+                  <h3 className="text-xl md:text-2xl font-sans group-hover:pl-4 transition-all duration-300">{item.role}</h3>
                   <span className="text-sm font-medium text-muted-foreground">{item.year}</span>
                 </div>
               </Reveal>
@@ -234,7 +234,7 @@ export default function Home() {
       <section id="portfolio" className="py-24 px-6 md:px-12 max-w-[1400px] mx-auto border-b border-border">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <Reveal>
-            <h2 className="text-4xl md:text-6xl font-serif max-w-2xl leading-tight">
+            <h2 className="text-4xl md:text-6xl font-sans max-w-2xl leading-tight">
               Explore my portfolio of creative solutions
             </h2>
           </Reveal>
@@ -252,7 +252,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
               <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Portrait</span>
-              <h3 className="text-2xl font-serif text-background">Moody Portraiture</h3>
+              <h3 className="text-2xl font-sans text-background">Moody Portraiture</h3>
             </div>
           </Reveal>
 
@@ -262,7 +262,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
               <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Commercial</span>
-              <h3 className="text-2xl font-serif text-background">Object Desire</h3>
+              <h3 className="text-2xl font-sans text-background">Object Desire</h3>
             </div>
           </Reveal>
 
@@ -272,7 +272,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
               <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Street</span>
-              <h3 className="text-2xl font-serif text-background">City Shadows</h3>
+              <h3 className="text-2xl font-sans text-background">City Shadows</h3>
             </div>
           </Reveal>
 
@@ -282,7 +282,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
               <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Video</span>
-              <h3 className="text-2xl font-serif text-background">Cinematic Narrative</h3>
+              <h3 className="text-2xl font-sans text-background">Cinematic Narrative</h3>
             </div>
           </Reveal>
 
@@ -292,7 +292,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
               <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Travel</span>
-              <h3 className="text-2xl font-serif text-background">Vast Horizons</h3>
+              <h3 className="text-2xl font-sans text-background">Vast Horizons</h3>
             </div>
           </Reveal>
         </div>
@@ -306,7 +306,7 @@ export default function Home() {
               <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
             </svg>
           </div>
-          <h2 className="text-3xl md:text-5xl font-serif leading-tight mb-12">
+          <h2 className="text-3xl md:text-5xl font-sans leading-tight mb-12">
             "Mang Risky has an incredible eye for detail. The ability to transform ordinary scenes into deeply emotional, cinematic moments is unmatched. The final deliverables exceeded every expectation."
           </h2>
           <div className="flex flex-col items-center justify-center gap-4">
@@ -324,7 +324,7 @@ export default function Home() {
       {/* Contact CTA Section */}
       <section id="contact" className="py-32 px-6 md:px-12 bg-foreground text-background text-center">
         <Reveal>
-          <h2 className="font-serif text-6xl md:text-8xl lg:text-[9rem] leading-none tracking-tight mb-8">
+          <h2 className="font-sans text-6xl md:text-8xl lg:text-[9rem] leading-none tracking-tight mb-8">
             Let's Work <br className="hidden md:block" /> Together
           </h2>
           <p className="text-lg md:text-xl text-background/70 max-w-2xl mx-auto mb-12 font-light">
