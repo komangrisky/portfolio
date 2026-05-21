@@ -221,10 +221,10 @@ export default function Home() {
           </div>
           <div className="lg:col-span-7 flex flex-col">
             {[
-              { role: "Freelance Photographer", year: "2018 - 2020" },
-              { role: "Videographer at Creative Studio", year: "2020 - 2022" },
-              { role: "Lead Visual Director", year: "2022 - 2024" },
-              { role: "Creative Freelancer", year: "2024 - Now" }
+              { role: "Graphic Design", year: "2020 - Now" },
+              { role: "Branding Logo Design", year: "2020 - Now" },
+              { role: "Freelance Photographer", year: "2023 - 2025" },
+              { role: "Video Editor", year: "2024 - Now" }
             ].map((item, i) => (
               <Reveal key={i} delay={i * 0.1}>
                 <div className="py-8 border-b border-border flex justify-between items-center group cursor-default">
