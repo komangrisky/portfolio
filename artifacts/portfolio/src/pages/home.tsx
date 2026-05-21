@@ -99,7 +99,7 @@ export default function Home() {
 
           <motion.div variants={fadeUp} className="md:text-right md:max-w-[240px] shrink-0 pb-2">
             <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-              Hi, I'm Mang Risky, a Creative Freelancer specializing in Photography & Videography. Available for projects worldwide.
+              Hi, I'm Mang Risky — a creative freelancer with 5 years experience passionate about visual storytelling and digital innovation.
             </p>
             <div className="flex md:justify-end gap-3 items-center">
               <span className="relative flex h-2.5 w-2.5">
@@ -131,10 +131,10 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-sans mb-8">About Me</h2>
             <div className="space-y-6 text-muted-foreground text-lg leading-relaxed font-light">
               <p>
-                I am a visual storyteller with a passion for finding beauty in the everyday. My journey in photography and videography is rooted in the belief that every frame should evoke an emotion.
+                Hi, I'm Mang Risky — a creative freelancer with 5 years experience passionate about visual storytelling and digital innovation.
               </p>
               <p>
-                With over years of experience spanning across commercial, editorial, and documentary styles, I bring a refined, cinematic eye to every project. I focus on raw authenticity, stripping away the unnecessary to reveal the core narrative.
+                I specialize in Graphic Design, Photo & Video Editing, and I'm currently expanding my expertise in Artificial Intelligence as an aspiring AI Specialist. I enjoy creating impactful visuals and meaningful digital experiences that combine creativity, strategy, and modern technology.
               </p>
             </div>
           </Reveal>
@@ -167,10 +167,10 @@ export default function Home() {
           <Reveal delay={0.1}>
             <div className="bg-card border border-border p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
               <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-sans">Portrait<br />Photography</h3>
+                <h3 className="text-2xl md:text-3xl font-sans">Graphic<br />Design</h3>
                 <ArrowRight className="w-6 h-6" />
               </div>
-              <p className="text-muted-foreground text-lg">Intimate and raw portraiture capturing true character with an editorial finish.</p>
+              <p className="text-muted-foreground text-lg">Creating impactful visuals and meaningful digital experiences that combine creativity and strategy.</p>
             </div>
           </Reveal>
 
@@ -178,10 +178,10 @@ export default function Home() {
           <Reveal delay={0.2}>
             <div className="bg-foreground text-background p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
               <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-sans">Commercial<br />Photography</h3>
+                <h3 className="text-2xl md:text-3xl font-sans">Photo<br />Editing</h3>
                 <ArrowRight className="w-6 h-6" />
               </div>
-              <p className="text-background/70 text-lg">Meticulous staging and elegant lighting that elevates brands and products.</p>
+              <p className="text-background/70 text-lg">Professional photo retouching and color grading that elevates every frame to its full potential.</p>
             </div>
           </Reveal>
 
@@ -189,10 +189,10 @@ export default function Home() {
           <Reveal delay={0.3}>
             <div className="bg-foreground text-background p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
               <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-sans">Cinematic<br />Videography</h3>
+                <h3 className="text-2xl md:text-3xl font-sans">Video<br />Editing</h3>
                 <ArrowRight className="w-6 h-6" />
               </div>
-              <p className="text-background/70 text-lg">Narrative-driven visual storytelling with a moody, cinematic atmosphere.</p>
+              <p className="text-background/70 text-lg">Cinematic video editing and post-production that tells compelling visual stories with impact.</p>
             </div>
           </Reveal>
 
@@ -200,10 +200,10 @@ export default function Home() {
           <Reveal delay={0.4}>
             <div className="bg-card border border-border p-8 md:p-12 h-full flex flex-col justify-between aspect-square md:aspect-auto">
               <div className="flex justify-between items-start mb-12">
-                <h3 className="text-2xl md:text-3xl font-sans">Brand Video<br />Production</h3>
+                <h3 className="text-2xl md:text-3xl font-sans">AI<br />Specialist</h3>
                 <ArrowRight className="w-6 h-6" />
               </div>
-              <p className="text-muted-foreground text-lg">Full-scale video production to craft compelling visual brand identities.</p>
+              <p className="text-muted-foreground text-lg">Expanding into Artificial Intelligence to blend modern technology with creative digital innovation.</p>
             </div>
           </Reveal>
         </div>
