@@ -68,20 +68,22 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-24 md:pt-48 md:pb-32 px-6 md:px-12 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <section className="pt-32 pb-24 md:pt-48 md:pb-32 px-6 md:px-12 max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <motion.div 
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="lg:col-span-8 flex flex-col justify-center"
+          className="flex flex-col justify-center"
         >
           <motion.h1 variants={fadeUp} className="font-sans text-6xl md:text-8xl lg:text-[7rem] leading-[0.95] tracking-tight mb-6">
             Creative <br /> Freelancer
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-xl md:text-2xl text-muted-foreground font-light mb-12">
+          <motion.p variants={fadeUp} className="text-xl md:text-2xl text-muted-foreground font-light mb-8">
             Photography & Videography
           </motion.p>
-          
+          <motion.p variants={fadeUp} className="text-sm leading-relaxed text-muted-foreground mb-8 max-w-sm">
+            Hi, I'm Mang Risky, a Creative Freelancer specializing in Photography & Videography. Available for projects worldwide.
+          </motion.p>
           <motion.div variants={fadeUp} className="flex gap-4 items-center">
             <span className="relative flex h-3 w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foreground opacity-20"></span>
@@ -94,11 +96,7 @@ export default function Home() {
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1, transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } }}
-          className="lg:col-span-4 relative flex flex-col gap-6"
         >
-          <div className="bg-muted p-6 text-sm leading-relaxed text-foreground border border-border">
-            Hi, I'm Mang Risky, a Creative Freelancer specializing in Photography & Videography. Available for projects worldwide.
-          </div>
           <div className="aspect-square w-full overflow-hidden bg-muted">
             <img src={heroPortrait} alt="Mang Risky" className="w-full h-full object-cover object-top filter grayscale" />
           </div>
