@@ -1,0 +1,44 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "oJ2q7aQAJacq8Dy9u203i"
+uri = "file://artifacts/portfolio/src/assets/images/hero-bg.png"
+type = "image"
+title = "Cinematic dark abstract light leak"
+
+[[generated]]
+id = "3hFmTlPSjhTgELaSC9E1A"
+uri = "file://artifacts/portfolio/src/assets/images/portrait.png"
+type = "image"
+title = "Moody cinematic portrait photography"
+
+[[generated]]
+id = "U08CYblNFHlOOurzduEW3"
+uri = "file://artifacts/portfolio/src/assets/images/product.png"
+type = "image"
+title = "Commercial product shot dramatic"
+
+[[generated]]
+id = "wAU7nD-kvAL8q6waIUu7E"
+uri = "file://artifacts/portfolio/src/assets/images/film-still.png"
+type = "image"
+title = "Cinematic videography film still"
+
+[[generated]]
+id = "5eIRW8CeEHPD3Wl-Vbmo6"
+uri = "file://artifacts/portfolio/src/assets/images/urban.png"
+type = "image"
+title = "Urban street photography neon"
+
+[[generated]]
+id = "HBq7rBcownlCulcXHUo2I"
+uri = "file://artifacts/portfolio/src/assets/images/landscape.png"
+type = "image"
+title = "Golden hour landscape photography"
+
+[[generated]]
+id = "yHLVke8tqQCG6UIS9_SQZ"
+uri = "file://artifacts/portfolio/src/assets/images/about.png"
+type = "image"
+title = "Creative freelancer photographer portrait"
