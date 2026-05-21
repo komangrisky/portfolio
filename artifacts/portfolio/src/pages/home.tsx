@@ -143,7 +143,7 @@ export default function Home() {
             <Reveal delay={0.1} className="flex flex-col gap-2">
               <span className="font-sans text-7xl md:text-8xl font-bold">+50</span>
               <span className="text-lg font-medium">Projects Completed</span>
-              <span className="text-sm text-muted-foreground">Across various industries globally.</span>
+              <span className="text-sm text-muted-foreground">Across various industries local Bali.</span>
             </Reveal>
             <Reveal delay={0.2} className="flex flex-col gap-2">
               <span className="font-sans text-7xl md:text-8xl font-bold">+30</span>
