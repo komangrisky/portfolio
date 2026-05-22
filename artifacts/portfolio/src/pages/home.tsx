@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ArrowRight, Instagram, Linkedin, Youtube, X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { ArrowRight, ArrowLeft, Instagram, Linkedin, Youtube, X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
 import heroPortrait from "@/assets/images/hero-portrait.jpg";
 import projPortrait from "@/assets/images/proj-portrait.png";
@@ -62,6 +62,27 @@ import akarasaLogo from "@assets/akarasa_logo_1779438434113.png";
 import kotoWordmark from "@assets/IMG_9885_1779438535547.png";
 import kotoMark from "@assets/IMG_9887_1779438535549.png";
 
+import ev1 from "@assets/2024_12_17_18_56_IMG_4359_1779443478063.jpg";
+import ev2 from "@assets/2024_12_17_19_03_IMG_4365_1779443478068.jpg";
+import ev3 from "@assets/2024_12_17_17_32_IMG_4302_1779443478069.jpg";
+import ev4 from "@assets/2024_12_17_17_22_IMG_4293_1779443478069.jpg";
+import ev5 from "@assets/2024_12_17_17_20_IMG_4287_1779443478070.jpg";
+import ev6 from "@assets/2024_12_17_17_16_IMG_4278_1779443478070.jpg";
+import ev7 from "@assets/2024_12_17_17_13_IMG_4275_1779443478070.jpg";
+import ev8 from "@assets/2024_12_17_16_51_IMG_4273_1779443478071.jpg";
+import ev9 from "@assets/2024_12_17_16_51_IMG_4270_1779443478072.jpg";
+
+import fd1 from "@assets/DSC04097_1779443711537.jpg";
+import fd2 from "@assets/DSC04080_1779443711545.jpg";
+import fd3 from "@assets/DSC04071_1779443711545.jpg";
+import fd4 from "@assets/DSC04041_1779443711546.jpg";
+import fd5 from "@assets/DSC03984_1779443711547.jpg";
+import fd6 from "@assets/DSC03936_1779443711547.jpg";
+import fd7 from "@assets/DSC03905_1779443711548.jpg";
+import fd8 from "@assets/DSC03893_1779443711548.jpg";
+import fd9 from "@assets/DSC03858_1779443711548.jpg";
+import fd10 from "@assets/DSC03845_1779443711549.jpg";
+
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
@@ -122,6 +143,11 @@ type BrandingProject = {
   slides: BrandingSlide[];
 };
 
+type PhotoCategory = {
+  name: string;
+  images: string[];
+};
+
 type Service = {
   title: string;
   description: string;
@@ -129,6 +155,7 @@ type Service = {
   dark: boolean;
   groups?: SocialMediaGroup[];
   brandingProjects?: BrandingProject[];
+  photoCategories?: PhotoCategory[];
 };
 
 function PhoneMockup({ src }: { src: string }) {
@@ -408,6 +435,196 @@ function SocialMediaModal({ service, onClose }: { service: Service; onClose: () 
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+function PhotographyModal({ service, onClose }: { service: Service; onClose: () => void }) {
+  const categories = service.photoCategories ?? [];
+  const [selectedCat, setSelectedCat] = useState<number | null>(null);
+  const [imgIdx, setImgIdx] = useState(0);
+
+  const cat = selectedCat !== null ? categories[selectedCat] : null;
+  const total = cat ? cat.images.length : 0;
+
+  const openCat = (i: number) => { setSelectedCat(i); setImgIdx(0); };
+  const closeCat = () => setSelectedCat(null);
+  const prevImg = () => setImgIdx(i => (i - 1 + total) % total);
+  const nextImg = () => setImgIdx(i => (i + 1) % total);
+
+  const handleDragEnd = (_: unknown, info: { offset: { x: number } }) => {
+    if (info.offset.x < -60) nextImg();
+    else if (info.offset.x > 60) prevImg();
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="bg-background w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center px-6 py-4 border-b border-border shrink-0">
+          <div className="flex items-center gap-3">
+            {cat && (
+              <button onClick={closeCat} className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <ArrowLeft className="w-4 h-4" />
+                <span>Kembali</span>
+              </button>
+            )}
+            <div>
+              <h2 className="text-xl md:text-2xl font-sans font-semibold">
+                {cat ? cat.name : service.title}
+              </h2>
+              {cat && (
+                <p className="text-xs text-muted-foreground mt-0.5">{imgIdx + 1} / {total} foto</p>
+              )}
+            </div>
+          </div>
+          <button onClick={onClose} className="p-2 hover:bg-muted transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Body — animated between category list and gallery */}
+        <AnimatePresence mode="wait">
+          {!cat ? (
+            /* ── LEVEL 1: Category grid ── */
+            <motion.div
+              key="categories"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.25 }}
+              className="flex-1 overflow-y-auto p-6"
+            >
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-5">
+                {categories.length} Kategori · Pilih kategori untuk melihat koleksi
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                {categories.map((c, i) => (
+                  <button
+                    key={i}
+                    onClick={() => c.images.length > 0 ? openCat(i) : undefined}
+                    className={`group relative overflow-hidden text-left focus:outline-none focus:ring-2 focus:ring-foreground ${c.images.length === 0 ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                  >
+                    {/* Cover image or placeholder */}
+                    <div className="aspect-[4/3] bg-muted overflow-hidden">
+                      {c.images.length > 0 ? (
+                        <img
+                          src={c.images[0]}
+                          alt={c.name}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          draggable={false}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground gap-2">
+                          <div className="text-3xl">📷</div>
+                          <p className="text-xs">Segera hadir</p>
+                        </div>
+                      )}
+                    </div>
+                    {/* Label */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent px-4 py-3">
+                      <p className="text-white font-semibold text-sm">{c.name}</p>
+                      <p className="text-white/60 text-xs">{c.images.length > 0 ? `${c.images.length} foto` : "Belum tersedia"}</p>
+                    </div>
+                    {/* Hover arrow */}
+                    {c.images.length > 0 && (
+                      <div className="absolute top-3 right-3 bg-white/20 group-hover:bg-white/40 text-white p-1.5 rounded-full transition-colors opacity-0 group-hover:opacity-100">
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          ) : (
+            /* ── LEVEL 2: Gallery viewer ── */
+            <motion.div
+              key={`gallery-${selectedCat}`}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.25 }}
+              className="flex-1 flex flex-col overflow-hidden"
+            >
+              {/* Main image */}
+              <div className="flex-1 relative flex items-center justify-center bg-black min-h-0 overflow-hidden">
+                <button
+                  onClick={prevImg}
+                  className="absolute left-3 z-10 p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={imgIdx}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.15}
+                    onDragEnd={handleDragEnd}
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    transition={{ duration: 0.2 }}
+                    className="w-full h-full flex items-center justify-center px-14 py-4 cursor-grab active:cursor-grabbing"
+                  >
+                    <img
+                      src={cat.images[imgIdx]}
+                      alt={`${cat.name} ${imgIdx + 1}`}
+                      className="max-w-full max-h-[55vh] object-contain select-none"
+                      draggable={false}
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                <button
+                  onClick={nextImg}
+                  className="absolute right-3 z-10 p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+
+                {/* Dots */}
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                  {cat.images.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setImgIdx(i)}
+                      className={`w-1.5 h-1.5 rounded-full transition-colors ${i === imgIdx ? "bg-white" : "bg-white/30"}`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Thumbnail strip */}
+              <div className="flex items-center gap-2 px-4 py-3 overflow-x-auto bg-background border-t border-border shrink-0">
+                {cat.images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setImgIdx(i)}
+                    className={`shrink-0 w-14 h-14 overflow-hidden transition-all ${i === imgIdx ? "ring-2 ring-foreground" : "opacity-50 hover:opacity-80"}`}
+                  >
+                    <img src={img} alt="" className="w-full h-full object-cover" draggable={false} />
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -810,6 +1027,24 @@ export default function Home() {
       description: "Professional photography capturing authentic moments and compelling visuals for brands and individuals.",
       items: [],
       dark: false,
+      photoCategories: [
+        {
+          name: "Photography Event",
+          images: [ev1, ev2, ev3, ev4, ev5, ev6, ev7, ev8, ev9],
+        },
+        {
+          name: "Food Photography",
+          images: [fd1, fd2, fd3, fd4, fd5, fd6, fd7, fd8, fd9, fd10],
+        },
+        {
+          name: "Dokumentasi Upacara",
+          images: [],
+        },
+        {
+          name: "G-20 Bali",
+          images: [],
+        },
+      ],
     },
     {
       title: "Video Editing",
@@ -825,11 +1060,13 @@ export default function Home() {
       {/* Service Modal */}
       <AnimatePresence>
         {selectedService && (
-          selectedService.brandingProjects && selectedService.brandingProjects.length > 0
-            ? <BrandingModal service={selectedService} onClose={() => setSelectedService(null)} />
-            : selectedService.groups && selectedService.groups.length > 0
-              ? <SocialMediaModal service={selectedService} onClose={() => setSelectedService(null)} />
-              : <ServiceModal service={selectedService} onClose={() => setSelectedService(null)} />
+          selectedService.photoCategories && selectedService.photoCategories.length > 0
+            ? <PhotographyModal service={selectedService} onClose={() => setSelectedService(null)} />
+            : selectedService.brandingProjects && selectedService.brandingProjects.length > 0
+              ? <BrandingModal service={selectedService} onClose={() => setSelectedService(null)} />
+              : selectedService.groups && selectedService.groups.length > 0
+                ? <SocialMediaModal service={selectedService} onClose={() => setSelectedService(null)} />
+                : <ServiceModal service={selectedService} onClose={() => setSelectedService(null)} />
         )}
       </AnimatePresence>
       
