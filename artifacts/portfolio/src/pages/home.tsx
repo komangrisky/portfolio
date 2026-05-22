@@ -1713,15 +1713,15 @@ export default function Home() {
             </svg>
           </div>
           <h2 className="text-3xl md:text-5xl font-sans leading-tight mb-12">
-            "Mang Risky has an incredible eye for detail. The ability to transform ordinary scenes into deeply emotional, cinematic moments is unmatched. The final deliverables exceeded every expectation."
+            "Working with him was an amazing experience. The quality of his graphic design, video editing, and photography exceeded expectations, and his AI creative skills brought fresh and innovative ideas to our project. Professional, creative, and easy to work with — highly recommended for anyone looking for modern and high-quality creative work."
           </h2>
           <div className="flex flex-col items-center justify-center gap-4">
             <div className="w-16 h-16 rounded-full overflow-hidden bg-muted">
-              <img src={avatarImg} alt="Client" className="w-full h-full object-cover filter grayscale" />
+              <img src={avatarImg} alt="Client" className="w-full h-full object-cover filter grayscale blur-md scale-110" />
             </div>
             <div>
-              <p className="font-bold">Sarah Jenkins</p>
-              <p className="text-sm text-muted-foreground">Creative Director, Studio X</p>
+              <p className="font-bold">Anonymous Client</p>
+              <p className="text-sm text-muted-foreground">Business Owner</p>
             </div>
           </div>
         </Reveal>
@@ -1775,7 +1775,7 @@ export default function Home() {
           <div>
             <div className="font-bold tracking-tight text-2xl mb-6">Mang Risky</div>
             <p className="text-background/60 text-sm max-w-xs">
-              Photography & Videography. <br /> Based in Indonesia, available worldwide.
+              Creative Freelancer — Photography, Videography, <br /> Graphic Design & Video Editing. <br /> Based in Bali, ready to collaborate with anyone, anywhere.
             </p>
           </div>
           
