@@ -103,7 +103,7 @@ import g5 from "@assets/DSCF7659_1779444077969.jpg";
 import pfGraphicDesign from "@assets/SnapInsta.to_489861301_17881030953270913_8689388485266757312_n_1779459259140.jpg";
 import pfSocialMedia from "@assets/SnapInsta.to_482226488_122186558996257407_6444128116143349002__1779459284281.jpg";
 import pfPhotography from "@assets/DSC03905_1779459301446.jpg";
-const pfVideo = "/property-film.mp4";
+const pfVideo = "/property-film-web.mp4";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
