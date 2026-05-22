@@ -58,15 +58,9 @@ import koraLogo from "@assets/kora_market_farm_logo_1779437775004.jpg";
 import koraMockup1 from "@assets/IMG_1968.JPG_1779438302216.jpeg";
 import koraMockup2 from "@assets/IMG_1967.JPG_1779438302225.jpeg";
 import kitaBicaraLogo from "@assets/new_green_1779438375304.png";
-import kitaBicaraCard from "@assets/brand_kita_bicara_card.png";
-import kitaBicaraTote from "@assets/brand_kita_bicara_tote.png";
 import akarasaLogo from "@assets/akarasa_logo_1779438434113.png";
-import akarasaStationery from "@assets/brand_akarasa_stationery.png";
-import akarasaTote from "@assets/brand_akarasa_tote.png";
 import kotoWordmark from "@assets/IMG_9885_1779438535547.png";
 import kotoMark from "@assets/IMG_9887_1779438535549.png";
-import kotoCup from "@assets/brand_koto_cup.png";
-import kotoStationery from "@assets/brand_koto_stationery.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -789,8 +783,6 @@ export default function Home() {
           hero: kitaBicaraLogo,
           slides: [
             { src: kitaBicaraLogo, label: "Logo Mark" },
-            { src: kitaBicaraCard, label: "Business Card" },
-            { src: kitaBicaraTote, label: "Merchandise Mockup" },
           ],
         },
         {
@@ -799,8 +791,6 @@ export default function Home() {
           hero: akarasaLogo,
           slides: [
             { src: akarasaLogo, label: "Brand Identity" },
-            { src: akarasaStationery, label: "Stationery Set" },
-            { src: akarasaTote, label: "Merchandise Mockup" },
           ],
         },
         {
@@ -810,8 +800,6 @@ export default function Home() {
           slides: [
             { src: kotoWordmark, label: "Wordmark" },
             { src: kotoMark, label: "Logo Mark" },
-            { src: kotoCup, label: "Cup Mockup" },
-            { src: kotoStationery, label: "Stationery Mockup" },
           ],
         },
       ],
