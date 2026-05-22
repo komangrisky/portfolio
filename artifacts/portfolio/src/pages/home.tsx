@@ -83,6 +83,23 @@ import fd8 from "@assets/DSC03893_1779443711548.jpg";
 import fd9 from "@assets/DSC03858_1779443711548.jpg";
 import fd10 from "@assets/DSC03845_1779443711549.jpg";
 
+import up1 from "@assets/DSA00194_1779443910832.jpg";
+import up2 from "@assets/2022_1227_13513200_1779443910839.jpg";
+import up3 from "@assets/2022_1227_13503600_1779443910840.jpg";
+import up4 from "@assets/2022_1227_13451100_1779443910840.jpg";
+import up5 from "@assets/2022_1227_13432300_1779443910840.jpg";
+import up6 from "@assets/2022_1227_13424000_1779443910841.jpg";
+import up7 from "@assets/2022_1227_13405200_1779443910841.jpg";
+import up8 from "@assets/2022_1227_13390200_1779443910842.jpg";
+import up9 from "@assets/2022_1227_13382300_1779443910842.jpg";
+import up10 from "@assets/2022_1227_13364700_1779443910843.jpg";
+
+import g1 from "@assets/DSCF8265-1_1779444077959.jpg";
+import g2 from "@assets/DSCF8756_1779444077968.jpg";
+import g3 from "@assets/DSCF8652_1779444077968.jpg";
+import g4 from "@assets/DSCF8450_1779444077969.jpg";
+import g5 from "@assets/DSCF7659_1779444077969.jpg";
+
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
@@ -1038,11 +1055,11 @@ export default function Home() {
         },
         {
           name: "Dokumentasi Upacara",
-          images: [],
+          images: [up1, up2, up3, up4, up5, up6, up7, up8, up9, up10],
         },
         {
-          name: "G-20 Bali",
-          images: [],
+          name: "G-20 Event",
+          images: [g1, g2, g3, g4, g5],
         },
       ],
     },
