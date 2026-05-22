@@ -42,6 +42,17 @@ import dovipos2 from "@assets/SnapInsta.to_482226488_122186558996257407_64441281
 import dovipos3 from "@assets/SnapInsta.to_493265739_122197277186257407_6559846175186615105__1779429557251.jpg";
 import dovipos4 from "@assets/SnapInsta.to_485308010_122189531516257407_428033218536129910_n_1779429796390.jpg";
 import dovipos5 from "@assets/SnapInsta.to_473617584_122176426838257407_6815221220223436201__1779429802643.jpg";
+import dovipos6 from "@assets/SnapInsta.to_473581698_122175841580257407_6268395871360592266__1779430519845.jpg";
+
+import mydovi6 from "@assets/SnapInsta.to_481506411_654858143763662_1442563488002702498_n_1779430650514.jpg";
+
+import kedaiIg from "@assets/IMG_2995_1779430674563.png";
+import kedai1 from "@assets/Kedai_20260501_213921_0000_1779431136039.png";
+import kedai2 from "@assets/Kedai_20260501_214506_0000_1779431136049.png";
+import kedai3 from "@assets/Kedai_20260503_002819_0000_1779431136051.png";
+import kedai4 from "@assets/Kedai_20260501_213402_0000_1779431202449.png";
+import kedai5 from "@assets/Kedai_20260501_213600_0000_1779431202450.png";
+import kedai6 from "@assets/Kedai_20260501_213724_0000_(1)_1779431202451.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -118,18 +129,27 @@ function PhoneMockup({ src }: { src: string }) {
   );
 }
 
-function SocialMediaModal({ service, onClose }: { service: Service; onClose: () => void }) {
-  const groups = service.groups ?? [];
-  const [current, setCurrent] = useState(0);
-  const group = groups[current];
-  const total = groups.length;
+function ImageLightbox({ images, startIndex, clientName, onClose }: {
+  images: string[];
+  startIndex: number;
+  clientName: string;
+  onClose: () => void;
+}) {
+  const [idx, setIdx] = useState(startIndex);
+  const total = images.length;
 
-  const prev = () => setCurrent(i => (i - 1 + total) % total);
-  const next = () => setCurrent(i => (i + 1) % total);
+  const prev = (e: React.MouseEvent) => { e.stopPropagation(); setIdx(i => (i - 1 + total) % total); };
+  const next = (e: React.MouseEvent) => { e.stopPropagation(); setIdx(i => (i + 1) % total); };
 
   const handleDragEnd = (_: unknown, info: { offset: { x: number } }) => {
-    if (info.offset.x < -60) next();
-    else if (info.offset.x > 60) prev();
+    if (info.offset.x < -60) setIdx(i => (i + 1) % total);
+    else if (info.offset.x > 60) setIdx(i => (i - 1 + total) % total);
+  };
+
+  const handleKey = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") setIdx(i => (i - 1 + total) % total);
+    if (e.key === "ArrowRight") setIdx(i => (i + 1) % total);
+    if (e.key === "Escape") onClose();
   };
 
   return (
@@ -137,104 +157,226 @@ function SocialMediaModal({ service, onClose }: { service: Service; onClose: () 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8"
+      className="fixed inset-0 z-[60] flex flex-col bg-black/95"
       onClick={onClose}
+      onKeyDown={handleKey}
+      tabIndex={0}
     >
-      <motion.div
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.95, opacity: 0 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="bg-background w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col"
-        onClick={e => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-border shrink-0">
-          <div>
-            <h2 className="text-xl md:text-2xl font-sans font-semibold">{service.title}</h2>
-            <p className="text-xs text-muted-foreground mt-0.5">Slide {current + 1} / {total}</p>
-          </div>
-          <button onClick={onClose} className="p-2 hover:bg-muted transition-colors">
-            <X className="w-5 h-5" />
-          </button>
+      {/* Lightbox header */}
+      <div className="flex justify-between items-center px-6 py-4 shrink-0" onClick={e => e.stopPropagation()}>
+        <div>
+          <p className="text-white font-semibold text-sm">{clientName}</p>
+          <p className="text-white/50 text-xs">{idx + 1} / {total}</p>
         </div>
+        <button onClick={onClose} className="p-2 text-white/70 hover:text-white transition-colors">
+          <X className="w-5 h-5" />
+        </button>
+      </div>
 
-        {/* Client nav bar */}
-        <div className="flex items-center justify-between px-6 py-3 bg-muted/40 border-b border-border shrink-0">
-          <button onClick={prev} className="p-1.5 hover:bg-muted rounded transition-colors">
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <div className="text-center">
-            <p className="font-semibold text-sm md:text-base tracking-wide">{group?.client}</p>
-            {group?.igHandle && (
-              <p className="text-xs text-muted-foreground">@{group.igHandle}</p>
-            )}
-          </div>
-          <button onClick={next} className="p-1.5 hover:bg-muted rounded transition-colors">
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Dots */}
-        <div className="flex justify-center gap-2 py-2 shrink-0">
-          {groups.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrent(i)}
-              className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-foreground" : "bg-foreground/20"}`}
-            />
-          ))}
-        </div>
-
-        {/* Main content — swipeable */}
-        <motion.div
-          key={current}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.15}
-          onDragEnd={handleDragEnd}
-          className="flex-1 overflow-y-auto cursor-grab active:cursor-grabbing"
+      {/* Image area */}
+      <div className="flex-1 flex items-center justify-center relative" onClick={e => e.stopPropagation()}>
+        <button
+          onClick={prev}
+          className="absolute left-4 z-10 p-3 bg-white/10 hover:bg-white/20 text-white transition-colors rounded-full"
         >
-          {group ? (
-            <div className="flex gap-6 p-6 min-h-full">
-              {/* Phone mockup */}
-              <div className="flex flex-col items-center gap-3 shrink-0">
-                <PhoneMockup src={group.igScreenshot} />
-                <span className="text-xs text-muted-foreground text-center font-medium">Instagram Profile</span>
-              </div>
+          <ChevronLeft className="w-5 h-5" />
+        </button>
 
-              {/* Content images grid */}
-              <div className="flex-1">
-                <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">Konten Yang Dibuat</p>
-                {group.images.length > 0 ? (
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {group.images.map((img, i) => (
-                      <div key={i} className="bg-muted overflow-hidden aspect-square">
-                        <img
-                          src={img}
-                          alt={`${group.client} konten ${i + 1}`}
-                          className="w-full h-full object-contain"
-                          draggable={false}
-                        />
-                      </div>
-                    ))}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={idx}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.15}
+            onDragEnd={handleDragEnd}
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -40 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full h-full flex items-center justify-center px-16 cursor-grab active:cursor-grabbing"
+          >
+            <img
+              src={images[idx]}
+              alt={`${clientName} konten ${idx + 1}`}
+              className="max-w-full max-h-[70vh] object-contain select-none"
+              draggable={false}
+            />
+          </motion.div>
+        </AnimatePresence>
+
+        <button
+          onClick={next}
+          className="absolute right-4 z-10 p-3 bg-white/10 hover:bg-white/20 text-white transition-colors rounded-full"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Thumbnail strip */}
+      <div className="flex items-center justify-center gap-2 px-6 py-4 overflow-x-auto shrink-0" onClick={e => e.stopPropagation()}>
+        {images.map((img, i) => (
+          <button
+            key={i}
+            onClick={() => setIdx(i)}
+            className={`shrink-0 w-12 h-12 overflow-hidden transition-all ${i === idx ? "ring-2 ring-white opacity-100" : "opacity-40 hover:opacity-70"}`}
+          >
+            <img src={img} alt="" className="w-full h-full object-cover" draggable={false} />
+          </button>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+function SocialMediaModal({ service, onClose }: { service: Service; onClose: () => void }) {
+  const groups = service.groups ?? [];
+  const [current, setCurrent] = useState(0);
+  const [lightbox, setLightbox] = useState<{ idx: number } | null>(null);
+  const group = groups[current];
+  const total = groups.length;
+
+  const prev = () => setCurrent(i => (i - 1 + total) % total);
+  const next = () => setCurrent(i => (i + 1) % total);
+
+  const handleDragEnd = (_: unknown, info: { offset: { x: number } }) => {
+    if (lightbox) return;
+    if (info.offset.x < -60) next();
+    else if (info.offset.x > 60) prev();
+  };
+
+  return (
+    <>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.95, opacity: 0 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="bg-background w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col"
+          onClick={e => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="flex justify-between items-center px-6 py-4 border-b border-border shrink-0">
+            <div>
+              <h2 className="text-xl md:text-2xl font-sans font-semibold">{service.title}</h2>
+              <p className="text-xs text-muted-foreground mt-0.5">Slide {current + 1} / {total}</p>
+            </div>
+            <button onClick={onClose} className="p-2 hover:bg-muted transition-colors">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Client nav bar */}
+          <div className="flex items-center justify-between px-6 py-3 bg-muted/40 border-b border-border shrink-0">
+            <button onClick={prev} className="p-1.5 hover:bg-muted rounded transition-colors">
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <div className="text-center">
+              <p className="font-semibold text-sm md:text-base tracking-wide">{group?.client}</p>
+              {group?.igHandle && (
+                <p className="text-xs text-muted-foreground">@{group.igHandle}</p>
+              )}
+            </div>
+            <button onClick={next} className="p-1.5 hover:bg-muted rounded transition-colors">
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Dots */}
+          <div className="flex justify-center gap-2 py-2 shrink-0">
+            {groups.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-foreground" : "bg-foreground/20"}`}
+              />
+            ))}
+          </div>
+
+          {/* Main content — swipeable between clients */}
+          <motion.div
+            key={current}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.15}
+            onDragEnd={handleDragEnd}
+            className="flex-1 overflow-y-auto cursor-grab active:cursor-grabbing"
+          >
+            {group ? (
+              <div className="flex gap-6 p-6 min-h-full">
+                {/* Phone mockup */}
+                <div className="flex flex-col items-center gap-3 shrink-0">
+                  <PhoneMockup src={group.igScreenshot} />
+                  <span className="text-xs text-muted-foreground text-center font-medium">Instagram Profile</span>
+                </div>
+
+                {/* Content images grid */}
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Konten Yang Dibuat
+                    </p>
+                    {group.images.length > 0 && (
+                      <span className="text-xs text-muted-foreground">{group.images.length} konten · klik untuk memperbesar</span>
+                    )}
                   </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center h-48 text-muted-foreground text-center gap-3">
-                    <div className="text-4xl">📸</div>
-                    <p className="text-sm">Konten untuk klien ini segera ditambahkan</p>
-                  </div>
-                )}
+                  {group.images.length > 0 ? (
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {group.images.map((img, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setLightbox({ idx: i })}
+                          className="group bg-muted overflow-hidden aspect-square relative focus:outline-none focus:ring-2 focus:ring-foreground"
+                        >
+                          <img
+                            src={img}
+                            alt={`${group.client} konten ${i + 1}`}
+                            className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                            draggable={false}
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                            <span className="text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 px-2 py-1">
+                              Lihat
+                            </span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-48 text-muted-foreground text-center gap-3">
+                      <div className="text-4xl">📸</div>
+                      <p className="text-sm">Konten untuk klien ini segera ditambahkan</p>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="flex items-center justify-center h-64 text-muted-foreground">
-              <p>Tidak ada data</p>
-            </div>
-          )}
+            ) : (
+              <div className="flex items-center justify-center h-64 text-muted-foreground">
+                <p>Tidak ada data</p>
+              </div>
+            )}
+          </motion.div>
         </motion.div>
       </motion.div>
-    </motion.div>
+
+      {/* Lightbox overlay */}
+      <AnimatePresence>
+        {lightbox && group && (
+          <ImageLightbox
+            images={group.images}
+            startIndex={lightbox.idx}
+            clientName={group.client}
+            onClose={() => setLightbox(null)}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
@@ -417,19 +559,19 @@ export default function Home() {
           client: "MY DOVI",
           igHandle: "mydovi.id",
           igScreenshot: myDoviIg,
-          images: [mydovi1, mydovi2, mydovi3, mydovi4, mydovi5],
+          images: [mydovi1, mydovi2, mydovi3, mydovi4, mydovi5, mydovi6],
         },
         {
           client: "DOVI POS",
           igHandle: "dovipos",
           igScreenshot: doviposIg,
-          images: [dovipos1, dovipos2, dovipos3, dovipos4, dovipos5],
+          images: [dovipos1, dovipos2, dovipos3, dovipos4, dovipos5, dovipos6],
         },
         {
           client: "KEDAI NIRMALADJAYA",
           igHandle: "kedainirmaladjaya",
-          igScreenshot: bprIg,
-          images: [],
+          igScreenshot: kedaiIg,
+          images: [kedai1, kedai2, kedai3, kedai4, kedai5, kedai6],
         },
       ],
     },
