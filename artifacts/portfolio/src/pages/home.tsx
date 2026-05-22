@@ -249,7 +249,7 @@ export default function Home() {
         <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-16">
           <p className="text-sm font-medium uppercase tracking-wider text-muted-foreground whitespace-nowrap">Trusted By</p>
           <div className="flex-1 w-full flex flex-wrap justify-center md:justify-between items-center gap-8 md:gap-12 opacity-60">
-            {["BPR Kas Indonesia", "My Dovi", "Dovi POS", "Warkop Agem Bali", "Luminova Creative", "And Many More"].map((brand, i) => (
+            {["BPR Kas Indonesia", "My Dovi", "Dovi POS", "Warkop Agem Bali", "Luminova Creative", "Kora Project"].map((brand, i) => (
               <span key={i} className="text-xl md:text-2xl font-sans font-bold tracking-wide">{brand}</span>
             ))}
           </div>
