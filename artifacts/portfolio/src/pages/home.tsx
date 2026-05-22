@@ -54,6 +54,14 @@ import kedai4 from "@assets/Kedai_20260501_213402_0000_1779431202449.png";
 import kedai5 from "@assets/Kedai_20260501_213600_0000_1779431202450.png";
 import kedai6 from "@assets/Kedai_20260501_213724_0000_(1)_1779431202451.png";
 
+import koraLogo from "@assets/kora_market_farm_logo_1779437775004.jpg";
+import koraMockup1 from "@assets/IMG_1968.JPG_1779438302216.jpeg";
+import koraMockup2 from "@assets/IMG_1967.JPG_1779438302225.jpeg";
+import kitaBicaraLogo from "@assets/new_green_1779438375304.png";
+import akarasaLogo from "@assets/akarasa_logo_1779438434113.png";
+import kotoWordmark from "@assets/IMG_9885_1779438535547.png";
+import kotoMark from "@assets/IMG_9887_1779438535549.png";
+
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
@@ -102,12 +110,25 @@ type SocialMediaGroup = {
   images: string[];
 };
 
+type BrandingSlide = {
+  src: string;
+  label?: string;
+};
+
+type BrandingProject = {
+  client: string;
+  tagline?: string;
+  hero: string;
+  slides: BrandingSlide[];
+};
+
 type Service = {
   title: string;
   description: string;
   items: ServiceItem[];
   dark: boolean;
   groups?: SocialMediaGroup[];
+  brandingProjects?: BrandingProject[];
 };
 
 function PhoneMockup({ src }: { src: string }) {
@@ -390,6 +411,162 @@ function SocialMediaModal({ service, onClose }: { service: Service; onClose: () 
   );
 }
 
+function BrandingModal({ service, onClose }: { service: Service; onClose: () => void }) {
+  const projects = service.brandingProjects ?? [];
+  const [current, setCurrent] = useState(0);
+  const [lightbox, setLightbox] = useState<{ idx: number } | null>(null);
+  const project = projects[current];
+  const total = projects.length;
+
+  const prev = () => setCurrent(i => (i - 1 + total) % total);
+  const next = () => setCurrent(i => (i + 1) % total);
+
+  return (
+    <>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.95, opacity: 0 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="bg-background w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col"
+          onClick={e => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="flex justify-between items-center px-6 py-4 border-b border-border shrink-0">
+            <div>
+              <h2 className="text-xl md:text-2xl font-sans font-semibold">{service.title}</h2>
+              <p className="text-xs text-muted-foreground mt-0.5">{current + 1} / {total} klien</p>
+            </div>
+            <button onClick={onClose} className="p-2 hover:bg-muted transition-colors">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Client nav */}
+          <div className="flex items-center justify-between px-6 py-2.5 bg-muted/40 border-b border-border shrink-0">
+            <button onClick={prev} className="p-1.5 hover:bg-muted rounded transition-colors">
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <div className="text-center">
+              <p className="font-semibold text-sm md:text-base tracking-wide">{project?.client}</p>
+              {project?.tagline && <p className="text-xs text-muted-foreground">{project.tagline}</p>}
+            </div>
+            <button onClick={next} className="p-1.5 hover:bg-muted rounded transition-colors">
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Dots */}
+          <div className="flex justify-center gap-2 py-2 shrink-0">
+            {projects.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-foreground" : "bg-foreground/20"}`}
+              />
+            ))}
+          </div>
+
+          {/* Body */}
+          <AnimatePresence mode="wait">
+            {project && (
+              <motion.div
+                key={current}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="flex-1 overflow-y-auto"
+              >
+                <div className="flex flex-col md:flex-row h-full min-h-[400px]">
+
+                  {/* LEFT: Hero logo panel */}
+                  <div className="md:w-2/5 shrink-0 relative overflow-hidden min-h-[220px] md:min-h-0">
+                    <img
+                      src={project.hero}
+                      alt={`${project.client} logo`}
+                      className="w-full h-full object-cover"
+                      draggable={false}
+                    />
+                    {/* Subtle gradient + label at bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent px-4 py-3">
+                      <p className="text-white font-semibold text-sm">{project.client}</p>
+                      <p className="text-white/60 text-xs">Brand Identity</p>
+                    </div>
+                  </div>
+
+                  {/* RIGHT: Slides grid */}
+                  <div className="flex-1 p-5 overflow-y-auto">
+                    <div className="flex items-center justify-between mb-4">
+                      <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                        Brand Assets
+                      </p>
+                      <span className="text-xs text-muted-foreground">
+                        {project.slides.length} slide{project.slides.length !== 1 ? "s" : ""} · klik untuk memperbesar
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {project.slides.map((slide, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setLightbox({ idx: i })}
+                          className="group relative bg-muted overflow-hidden focus:outline-none focus:ring-2 focus:ring-foreground"
+                        >
+                          <div className="aspect-square overflow-hidden">
+                            <img
+                              src={slide.src}
+                              alt={slide.label ?? `${project.client} slide ${i + 1}`}
+                              className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                              draggable={false}
+                            />
+                          </div>
+                          {/* Label */}
+                          <div className="px-2 py-1.5 bg-background/80 border-t border-border">
+                            <p className="text-[11px] font-medium text-foreground/70 truncate">
+                              {slide.label ?? `Slide ${i + 1}`}
+                            </p>
+                          </div>
+                          {/* Hover overlay */}
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors flex items-center justify-center">
+                            <span className="text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 px-2 py-1">
+                              Lihat
+                            </span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </motion.div>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightbox && project && (
+          <ImageLightbox
+            images={project.slides.map(s => s.src)}
+            startIndex={lightbox.idx}
+            clientName={project.client}
+            onClose={() => setLightbox(null)}
+          />
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
 function ServiceModal({ service, onClose }: { service: Service; onClose: () => void }) {
   const [current, setCurrent] = useState(0);
   const total = service.items.length;
@@ -589,6 +766,43 @@ export default function Home() {
       title: "Branding & Logo",
       description: "Strategic brand identity design — from logo creation to full visual systems that make brands memorable.",
       items: [],
+      brandingProjects: [
+        {
+          client: "Kora Market Farm",
+          tagline: "Farm-to-table brand identity",
+          hero: koraLogo,
+          slides: [
+            { src: koraLogo, label: "Logo Mark" },
+            { src: koraMockup1, label: "Brand Mockup" },
+            { src: koraMockup2, label: "Brand Application" },
+          ],
+        },
+        {
+          client: "Kita Bicara",
+          tagline: "Brand identity design",
+          hero: kitaBicaraLogo,
+          slides: [
+            { src: kitaBicaraLogo, label: "Logo Mark" },
+          ],
+        },
+        {
+          client: "Akarasa",
+          tagline: "Brand identity design",
+          hero: akarasaLogo,
+          slides: [
+            { src: akarasaLogo, label: "Brand Identity" },
+          ],
+        },
+        {
+          client: "Koto Kopi Bali",
+          tagline: "Coffee brand identity",
+          hero: kotoWordmark,
+          slides: [
+            { src: kotoWordmark, label: "Wordmark" },
+            { src: kotoMark, label: "Logo Mark" },
+          ],
+        },
+      ],
       dark: true,
     },
     {
@@ -611,9 +825,11 @@ export default function Home() {
       {/* Service Modal */}
       <AnimatePresence>
         {selectedService && (
-          selectedService.groups && selectedService.groups.length > 0
-            ? <SocialMediaModal service={selectedService} onClose={() => setSelectedService(null)} />
-            : <ServiceModal service={selectedService} onClose={() => setSelectedService(null)} />
+          selectedService.brandingProjects && selectedService.brandingProjects.length > 0
+            ? <BrandingModal service={selectedService} onClose={() => setSelectedService(null)} />
+            : selectedService.groups && selectedService.groups.length > 0
+              ? <SocialMediaModal service={selectedService} onClose={() => setSelectedService(null)} />
+              : <ServiceModal service={selectedService} onClose={() => setSelectedService(null)} />
         )}
       </AnimatePresence>
       
