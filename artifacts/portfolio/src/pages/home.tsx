@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, Instagram, Linkedin, Youtube, X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
@@ -236,7 +236,7 @@ function ImageLightbox({ images, startIndex, clientName, onClose }: {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[60] flex flex-col bg-black/95"
+      className="fixed inset-0 z-[80] flex flex-col bg-black/95"
       onClick={onClose}
       onKeyDown={handleKey}
       tabIndex={0}
@@ -329,7 +329,7 @@ function SocialMediaModal({ service, onClose }: { service: Service; onClose: () 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8"
+        className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 p-4 md:p-8"
         onClick={onClose}
       >
         <motion.div
@@ -541,7 +541,7 @@ function VideoEditingModal({ service, onClose }: { service: Service; onClose: ()
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8"
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 p-4 md:p-8"
       onClick={onClose}
     >
       <motion.div
@@ -680,7 +680,7 @@ function PhotographyModal({ service, onClose }: { service: Service; onClose: () 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8"
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 p-4 md:p-8"
       onClick={onClose}
     >
       <motion.div
@@ -863,7 +863,7 @@ function BrandingModal({ service, onClose }: { service: Service; onClose: () => 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8"
+        className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 p-4 md:p-8"
         onClick={onClose}
       >
         <motion.div
@@ -1021,7 +1021,7 @@ function ServiceModal({ service, onClose }: { service: Service; onClose: () => v
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8"
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 p-4 md:p-8"
       onClick={onClose}
     >
       <motion.div
@@ -1166,7 +1166,7 @@ function PortfolioLightbox({ project, onClose }: { project: PortfolioProject; on
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 md:p-8"
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/90 p-4 md:p-8"
       onClick={onClose}
     >
       <button
@@ -1210,6 +1210,24 @@ function PortfolioLightbox({ project, onClose }: { project: PortfolioProject; on
 export default function Home() {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [activePortfolio, setActivePortfolio] = useState<PortfolioProject | null>(null);
+  const [navVisible, setNavVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (currentY < 80) {
+        setNavVisible(true);
+      } else if (currentY > lastScrollY.current + 5) {
+        setNavVisible(false);
+      } else if (currentY < lastScrollY.current - 5) {
+        setNavVisible(true);
+      }
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const services: Service[] = [
     {
@@ -1423,7 +1441,7 @@ export default function Home() {
       </AnimatePresence>
       
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border px-6 py-5 flex justify-between items-center text-sm font-medium">
+      <nav className={`fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border px-6 py-5 flex justify-between items-center text-sm font-medium transition-transform duration-300 ${navVisible && !selectedService && !activePortfolio ? "translate-y-0" : "-translate-y-full"}`}>
         <div className="font-bold tracking-tight text-base">Mang Risky</div>
         <div className="hidden md:flex gap-8 text-muted-foreground">
           <a href="#about" className="hover:text-foreground transition-colors">About</a>
