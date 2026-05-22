@@ -126,7 +126,7 @@ function ServiceModal({ service, onClose }: { service: Service; onClose: () => v
                 <img
                   src={activeItem.src}
                   alt={activeItem.caption ?? `${service.title} ${current + 1}`}
-                  className="w-full h-full object-cover pointer-events-none"
+                  className="w-full h-full object-contain pointer-events-none"
                   draggable={false}
                 />
               </motion.div>
@@ -220,11 +220,11 @@ export default function Home() {
       title: "Graphic Design",
       description: "Creating impactful visuals and meaningful digital experiences that combine creativity and strategy.",
       items: [
-        { src: gd1, caption: "Warkop Agem Bali — Social Ad Series #1" },
-        { src: gd2, caption: "Warkop Agem Bali — Social Ad Series #2" },
-        { src: gd3, caption: "Warkop Agem Bali — Spesial Paket Pagi" },
-        { src: gd4, caption: "Warkop Agem Bali — Cheese Melt Campaign" },
-        { src: gd5, caption: "Warkop Agem Bali — Double Soft Burger Promo" },
+        { src: gd1, caption: "Personal Project — Burger Ad Series #1" },
+        { src: gd2, caption: "Personal Project — Burger Ad Series #2" },
+        { src: gd3, caption: "Personal Project — Spesial Paket Pagi" },
+        { src: gd4, caption: "Personal Project — Cheese Melt Campaign" },
+        { src: gd5, caption: "Personal Project — Double Soft Burger Promo" },
         { src: gd6, caption: "Si Shu — Sushi Menu Poster" },
         { src: gd7, caption: "Si Shu — Sushi Tusuk Campaign" },
         { src: gd8, caption: "Bread Pillow — Sourdough Poster" },
