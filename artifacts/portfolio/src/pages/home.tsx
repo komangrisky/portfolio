@@ -1266,7 +1266,56 @@ export default function Home() {
       description: "Cinematic video editing and post-production that tells compelling visual stories with lasting impact.",
       items: [],
       dark: false,
-      videoProjects: [],
+      videoProjects: [
+        {
+          title: "Acara Lifesharing THE HERO TALKS",
+          client: "BPR KAS Indonesia",
+          platform: "instagram",
+          link: "https://www.instagram.com/reel/C7yJxbLysa_/",
+        },
+        {
+          title: "Literasi & Inklusi Keuangan bersama SMAN 7 Denpasar",
+          client: "BPR KAS Indonesia",
+          platform: "instagram",
+          link: "https://www.instagram.com/reel/C8DlvIcSsMO/",
+        },
+        {
+          title: "Dokumentasi Lomba 17 Agustus",
+          client: "BPR KAS Indonesia",
+          platform: "instagram",
+          link: "https://www.instagram.com/reel/C-wdYAQyW4y/",
+        },
+        {
+          title: "Collaboration with Remax Dewata",
+          client: "Remax Dewata",
+          platform: "instagram",
+          link: "https://www.instagram.com/reel/DE6B9lOSniS/",
+        },
+        {
+          title: "Afternoon Tea Collaboration",
+          client: "Dovi POS",
+          platform: "instagram",
+          link: "https://www.instagram.com/reel/DA-ZUcayI_e/",
+        },
+        {
+          title: "Motion Graphic Design",
+          client: "Dovi POS",
+          platform: "instagram",
+          link: "https://www.instagram.com/reel/DA-ZUcayI_e/",
+        },
+        {
+          title: "Content Marketing",
+          client: "Dovi POS",
+          platform: "instagram",
+          link: "https://www.instagram.com/reel/DAHon1vShQa/",
+        },
+        {
+          title: "Content Marketing",
+          client: "My Dovi",
+          platform: "instagram",
+          link: "https://www.instagram.com/reel/CeM8JoDhZ7h/",
+        },
+      ],
     },
   ];
 
