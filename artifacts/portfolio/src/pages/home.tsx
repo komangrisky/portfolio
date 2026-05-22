@@ -1188,6 +1188,8 @@ function PortfolioLightbox({ project, onClose }: { project: PortfolioProject; on
             src={project.src}
             controls
             autoPlay
+            muted
+            playsInline
             className="max-w-full max-h-[80vh] object-contain"
           />
         ) : (
@@ -1697,6 +1699,7 @@ export default function Home() {
               className="group relative overflow-hidden aspect-video bg-muted w-full block md:mt-8 focus:outline-none focus:ring-2 focus:ring-foreground"
               onMouseEnter={e => e.currentTarget.querySelector("video")?.play()}
               onMouseLeave={e => { const v = e.currentTarget.querySelector("video"); if (v) { v.pause(); v.currentTime = 0; } }}
+              onTouchStart={e => e.currentTarget.querySelector("video")?.play()}
             >
               <video
                 src={pfVideo}
