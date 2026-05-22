@@ -483,6 +483,12 @@ const getAutoThumbnail = (platform: VideoProject["platform"], link: string): str
   return null;
 };
 
+const getInstagramEmbedUrl = (link: string): string | null => {
+  const m = link.match(/instagram\.com\/(p|reel|tv)\/([A-Za-z0-9_-]+)/);
+  if (m) return `https://www.instagram.com/${m[1]}/${m[2]}/embed/`;
+  return null;
+};
+
 const platformGradient: Record<VideoProject["platform"], string> = {
   instagram: "from-purple-600 via-pink-500 to-orange-400",
   tiktok: "from-black via-[#010101] to-[#EE1D52]",
@@ -574,24 +580,44 @@ function VideoEditingModal({ service, onClose }: { service: Service; onClose: ()
                   className="group relative overflow-hidden block focus:outline-none focus:ring-2 focus:ring-foreground"
                 >
                   {/* Thumbnail */}
-                  <div className="aspect-video bg-muted overflow-hidden">
-                    {(() => {
-                      const thumb = vid.thumbnail ?? getAutoThumbnail(vid.platform, vid.link);
-                      return thumb ? (
-                        <img
-                          src={thumb}
-                          alt={vid.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          draggable={false}
-                        />
-                      ) : (
-                        <div className={`w-full h-full bg-gradient-to-br ${platformGradient[vid.platform]} flex flex-col items-center justify-center gap-2 transition-transform duration-500 group-hover:scale-105`}>
-                          <div className="text-white/80">{platformIcon(vid.platform)}</div>
-                          <span className="text-white/60 text-[10px] uppercase tracking-widest font-medium">{vid.platform}</span>
-                        </div>
-                      );
-                    })()}
-                  </div>
+                  {(() => {
+                    if (vid.platform === "instagram") {
+                      const embedUrl = getInstagramEmbedUrl(vid.link);
+                      if (embedUrl) {
+                        return (
+                          <div className="relative overflow-hidden bg-[#fafafa]" style={{ aspectRatio: "4/5" }}>
+                            <iframe
+                              src={embedUrl}
+                              className="absolute top-0 left-0 w-full border-0 pointer-events-none"
+                              style={{ height: "140%", marginTop: "-5%" }}
+                              scrolling="no"
+                              frameBorder={0}
+                              allowTransparency
+                              title={vid.title}
+                            />
+                          </div>
+                        );
+                      }
+                    }
+                    const thumb = vid.thumbnail ?? getAutoThumbnail(vid.platform, vid.link);
+                    return (
+                      <div className="aspect-video bg-muted overflow-hidden">
+                        {thumb ? (
+                          <img
+                            src={thumb}
+                            alt={vid.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            draggable={false}
+                          />
+                        ) : (
+                          <div className={`w-full h-full bg-gradient-to-br ${platformGradient[vid.platform]} flex flex-col items-center justify-center gap-2 transition-transform duration-500 group-hover:scale-105`}>
+                            <div className="text-white/80">{platformIcon(vid.platform)}</div>
+                            <span className="text-white/60 text-[10px] uppercase tracking-widest font-medium">{vid.platform}</span>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
 
                   {/* Overlay — slides up on hover */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-3">
