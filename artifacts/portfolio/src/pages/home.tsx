@@ -11,6 +11,16 @@ import projWedding from "@/assets/images/proj-wedding.png";
 import projLandscape from "@/assets/images/proj-landscape.png";
 import avatarImg from "@/assets/images/avatar.png";
 
+import gd1 from "@assets/1_1779425702235.png";
+import gd2 from "@assets/2_1779425702254.png";
+import gd3 from "@assets/3_1779425702256.png";
+import gd4 from "@assets/4_1779425702257.png";
+import gd5 from "@assets/5_1779425702259.png";
+import gd6 from "@assets/SnapInsta.to_489915909_17881030962270913_4948286246999901179_n_1779426702032.jpg";
+import gd7 from "@assets/SnapInsta.to_489861301_17881030953270913_8689388485266757312_n_1779426702035.jpg";
+import gd8 from "@assets/SnapInsta.to_490182516_17880922065270913_8501581291407739613_n_1779426859980.jpg";
+import gd9 from "@assets/SnapInsta.to_489526307_17880922074270913_6974189309025494708_n_1779426859983.jpg";
+
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
@@ -209,7 +219,17 @@ export default function Home() {
     {
       title: "Graphic Design",
       description: "Creating impactful visuals and meaningful digital experiences that combine creativity and strategy.",
-      items: [],
+      items: [
+        { src: gd1, caption: "Warkop Agem Bali — Social Ad Series #1" },
+        { src: gd2, caption: "Warkop Agem Bali — Social Ad Series #2" },
+        { src: gd3, caption: "Warkop Agem Bali — Spesial Paket Pagi" },
+        { src: gd4, caption: "Warkop Agem Bali — Cheese Melt Campaign" },
+        { src: gd5, caption: "Warkop Agem Bali — Double Soft Burger Promo" },
+        { src: gd6, caption: "Si Shu — Sushi Menu Poster" },
+        { src: gd7, caption: "Si Shu — Sushi Tusuk Campaign" },
+        { src: gd8, caption: "Bread Pillow — Sourdough Poster" },
+        { src: gd9, caption: "Bread Pillow — Sourdough Mockup Print" },
+      ],
       dark: false,
     },
     {
