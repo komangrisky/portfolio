@@ -21,6 +21,28 @@ import gd7 from "@assets/SnapInsta.to_489861301_17881030953270913_86893884852667
 import gd8 from "@assets/SnapInsta.to_490182516_17880922065270913_8501581291407739613_n_1779426859980.jpg";
 import gd9 from "@assets/SnapInsta.to_489526307_17880922074270913_6974189309025494708_n_1779426859983.jpg";
 
+import bprIg from "@assets/IMG_2992_1779428672369.png";
+import bpr1 from "@assets/SnapInsta.to_493907731_1259158569546020_4608108281931927551_n_1779428691961.jpg";
+import bpr2 from "@assets/SnapInsta.to_493151387_1259158636212680_4628735394798468503_n_1779428699638.jpg";
+import bpr3 from "@assets/SnapInsta.to_494205077_1259158682879342_4138179937652652106_n_1779428707625.jpg";
+import bpr4 from "@assets/SnapInsta.to_493408673_1259158522879358_6529029882707470470_n_1779428716074.jpg";
+import bpr5 from "@assets/SnapInsta.to_493090815_1259158856212658_7059976828168709985_n_1779428735971.jpg";
+import bpr6 from "@assets/SnapInsta.to_494052892_1259158479546029_7000198123372642265_n_1779428742601.jpg";
+
+import myDoviIg from "@assets/IMG_2993_1779428768358.png";
+import mydovi1 from "@assets/SnapInsta.to_481906222_654858217096988_3809438425069674665_n_1779429340525.jpg";
+import mydovi2 from "@assets/SnapInsta.to_481506315_654857993763677_1546084556318246458_n_1779429340547.jpg";
+import mydovi3 from "@assets/SnapInsta.to_482129230_654858060430337_5408071129425258116_n_1779429340548.jpg";
+import mydovi4 from "@assets/SnapInsta.to_481190312_654858153763661_351958878832986569_n_1779429340548.jpg";
+import mydovi5 from "@assets/SnapInsta.to_481952247_654858053763671_7380503559067098542_n_1779429340549.jpg";
+
+import doviposIg from "@assets/IMG_2994_1779429364730.png";
+import dovipos1 from "@assets/SnapInsta.to_483918974_122188507220257407_7787840928610392772__1779429546086.jpg";
+import dovipos2 from "@assets/SnapInsta.to_482226488_122186558996257407_6444128116143349002__1779429551455.jpg";
+import dovipos3 from "@assets/SnapInsta.to_493265739_122197277186257407_6559846175186615105__1779429557251.jpg";
+import dovipos4 from "@assets/SnapInsta.to_485308010_122189531516257407_428033218536129910_n_1779429796390.jpg";
+import dovipos5 from "@assets/SnapInsta.to_473617584_122176426838257407_6815221220223436201__1779429802643.jpg";
+
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
@@ -62,12 +84,159 @@ type ServiceItem = {
   link?: string;
 };
 
+type SocialMediaGroup = {
+  client: string;
+  igHandle: string;
+  igScreenshot: string;
+  images: string[];
+};
+
 type Service = {
   title: string;
   description: string;
   items: ServiceItem[];
   dark: boolean;
+  groups?: SocialMediaGroup[];
 };
+
+function PhoneMockup({ src }: { src: string }) {
+  return (
+    <div className="relative shrink-0" style={{ width: 160, height: 320 }}>
+      <div className="absolute inset-0 rounded-[28px] bg-[#111] border-[3px] border-[#2a2a2a] shadow-2xl" />
+      <div className="absolute -right-[5px] top-16 w-[3px] h-8 bg-[#2a2a2a] rounded-r-sm" />
+      <div className="absolute -left-[5px] top-12 w-[3px] h-5 bg-[#2a2a2a] rounded-l-sm" />
+      <div className="absolute -left-[5px] top-20 w-[3px] h-5 bg-[#2a2a2a] rounded-l-sm" />
+      <div className="absolute inset-[5px] rounded-[23px] overflow-hidden bg-black">
+        <div className="absolute top-0 left-0 right-0 h-5 bg-black z-10 flex justify-between items-center px-3">
+          <span className="text-white text-[7px] font-medium">13.40</span>
+          <div className="w-8 h-2.5 bg-[#1c1c1e] rounded-full" />
+          <div className="text-white text-[7px]">◾◾◾</div>
+        </div>
+        <img src={src} alt="Instagram profile" className="w-full h-full object-cover object-top" />
+      </div>
+    </div>
+  );
+}
+
+function SocialMediaModal({ service, onClose }: { service: Service; onClose: () => void }) {
+  const groups = service.groups ?? [];
+  const [current, setCurrent] = useState(0);
+  const group = groups[current];
+  const total = groups.length;
+
+  const prev = () => setCurrent(i => (i - 1 + total) % total);
+  const next = () => setCurrent(i => (i + 1) % total);
+
+  const handleDragEnd = (_: unknown, info: { offset: { x: number } }) => {
+    if (info.offset.x < -60) next();
+    else if (info.offset.x > 60) prev();
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 md:p-8"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="bg-background w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center px-6 py-4 border-b border-border shrink-0">
+          <div>
+            <h2 className="text-xl md:text-2xl font-sans font-semibold">{service.title}</h2>
+            <p className="text-xs text-muted-foreground mt-0.5">Slide {current + 1} / {total}</p>
+          </div>
+          <button onClick={onClose} className="p-2 hover:bg-muted transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Client nav bar */}
+        <div className="flex items-center justify-between px-6 py-3 bg-muted/40 border-b border-border shrink-0">
+          <button onClick={prev} className="p-1.5 hover:bg-muted rounded transition-colors">
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <div className="text-center">
+            <p className="font-semibold text-sm md:text-base tracking-wide">{group?.client}</p>
+            {group?.igHandle && (
+              <p className="text-xs text-muted-foreground">@{group.igHandle}</p>
+            )}
+          </div>
+          <button onClick={next} className="p-1.5 hover:bg-muted rounded transition-colors">
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Dots */}
+        <div className="flex justify-center gap-2 py-2 shrink-0">
+          {groups.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-foreground" : "bg-foreground/20"}`}
+            />
+          ))}
+        </div>
+
+        {/* Main content — swipeable */}
+        <motion.div
+          key={current}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.15}
+          onDragEnd={handleDragEnd}
+          className="flex-1 overflow-y-auto cursor-grab active:cursor-grabbing"
+        >
+          {group ? (
+            <div className="flex gap-6 p-6 min-h-full">
+              {/* Phone mockup */}
+              <div className="flex flex-col items-center gap-3 shrink-0">
+                <PhoneMockup src={group.igScreenshot} />
+                <span className="text-xs text-muted-foreground text-center font-medium">Instagram Profile</span>
+              </div>
+
+              {/* Content images grid */}
+              <div className="flex-1">
+                <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">Konten Yang Dibuat</p>
+                {group.images.length > 0 ? (
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {group.images.map((img, i) => (
+                      <div key={i} className="bg-muted overflow-hidden aspect-square">
+                        <img
+                          src={img}
+                          alt={`${group.client} konten ${i + 1}`}
+                          className="w-full h-full object-contain"
+                          draggable={false}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-48 text-muted-foreground text-center gap-3">
+                    <div className="text-4xl">📸</div>
+                    <p className="text-sm">Konten untuk klien ini segera ditambahkan</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center h-64 text-muted-foreground">
+              <p>Tidak ada data</p>
+            </div>
+          )}
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 function ServiceModal({ service, onClose }: { service: Service; onClose: () => void }) {
   const [current, setCurrent] = useState(0);
@@ -234,9 +403,35 @@ export default function Home() {
     },
     {
       title: "Social Media Design",
-      description: "Eye-catching social media content and templates designed to grow engagement and strengthen brand presence. Klik thumbnail untuk melihat konten asli di media sosial.",
+      description: "Eye-catching social media content and templates designed to grow engagement and strengthen brand presence.",
       items: [],
       dark: true,
+      groups: [
+        {
+          client: "BPR KAS INDONESIA",
+          igHandle: "bprkasindonesia",
+          igScreenshot: bprIg,
+          images: [bpr1, bpr2, bpr3, bpr4, bpr5, bpr6],
+        },
+        {
+          client: "MY DOVI",
+          igHandle: "mydovi.id",
+          igScreenshot: myDoviIg,
+          images: [mydovi1, mydovi2, mydovi3, mydovi4, mydovi5],
+        },
+        {
+          client: "DOVI POS",
+          igHandle: "dovipos",
+          igScreenshot: doviposIg,
+          images: [dovipos1, dovipos2, dovipos3, dovipos4, dovipos5],
+        },
+        {
+          client: "KEDAI NIRMALADJAYA",
+          igHandle: "kedainirmaladjaya",
+          igScreenshot: bprIg,
+          images: [],
+        },
+      ],
     },
     {
       title: "Branding & Logo",
@@ -264,7 +459,9 @@ export default function Home() {
       {/* Service Modal */}
       <AnimatePresence>
         {selectedService && (
-          <ServiceModal service={selectedService} onClose={() => setSelectedService(null)} />
+          selectedService.groups && selectedService.groups.length > 0
+            ? <SocialMediaModal service={selectedService} onClose={() => setSelectedService(null)} />
+            : <ServiceModal service={selectedService} onClose={() => setSelectedService(null)} />
         )}
       </AnimatePresence>
       
