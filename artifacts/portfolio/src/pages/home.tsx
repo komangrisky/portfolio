@@ -1301,7 +1301,7 @@ export default function Home() {
           title: "Motion Graphic Design",
           client: "Dovi POS",
           platform: "instagram",
-          link: "https://www.instagram.com/reel/DA-ZUcayI_e/",
+          link: "https://www.instagram.com/reel/DIK8TePBcsX/",
         },
         {
           title: "Content Marketing",
@@ -1314,6 +1314,18 @@ export default function Home() {
           client: "My Dovi",
           platform: "instagram",
           link: "https://www.instagram.com/reel/CeM8JoDhZ7h/",
+        },
+        {
+          title: "Content Marketing",
+          client: "My Dovi",
+          platform: "instagram",
+          link: "https://www.instagram.com/reel/C2dqv8pBVyS/",
+        },
+        {
+          title: "Content Marketing",
+          client: "My Dovi",
+          platform: "instagram",
+          link: "https://www.instagram.com/reel/CzA4HahhU8k/",
         },
       ],
     },
