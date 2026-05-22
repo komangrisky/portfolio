@@ -1187,9 +1187,9 @@ function PortfolioLightbox({ project, onClose }: { project: PortfolioProject; on
           <video
             src={project.src}
             controls
-            autoPlay
             muted
             playsInline
+            preload="auto"
             className="max-w-full max-h-[80vh] object-contain"
           />
         ) : (
@@ -1699,26 +1699,27 @@ export default function Home() {
               className="group relative overflow-hidden aspect-video bg-muted w-full block md:mt-8 focus:outline-none focus:ring-2 focus:ring-foreground"
               onMouseEnter={e => e.currentTarget.querySelector("video")?.play()}
               onMouseLeave={e => { const v = e.currentTarget.querySelector("video"); if (v) { v.pause(); v.currentTime = 0; } }}
-              onTouchStart={e => e.currentTarget.querySelector("video")?.play()}
             >
               <video
                 src={pfVideo}
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="auto"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              {/* Play icon when idle */}
-              <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300">
+              {/* Overlay — always visible on mobile, hover-only on desktop */}
+              <div className="absolute inset-0 bg-foreground/40 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Play icon — hidden on mobile overlay hover, always shown on mobile */}
+              <div className="absolute inset-0 flex items-center justify-center md:group-hover:opacity-0 transition-opacity duration-300">
                 <div className="bg-black/40 backdrop-blur-sm border border-white/20 rounded-full p-4">
                   <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6 ml-0.5"><path d="M8 5v14l11-7z"/></svg>
                 </div>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Video Editing</span>
-                <h3 className="text-2xl font-sans text-background text-left">Property Film</h3>
+              {/* Label — always shown on mobile, slide-in on desktop hover */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:translate-y-8 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-300">
+                <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-2">Video Editing</span>
+                <h3 className="text-xl font-sans text-background text-left">Property Film</h3>
               </div>
             </button>
           </Reveal>
