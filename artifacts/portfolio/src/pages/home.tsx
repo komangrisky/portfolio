@@ -100,6 +100,11 @@ import g3 from "@assets/DSCF8652_1779444077968.jpg";
 import g4 from "@assets/DSCF8450_1779444077969.jpg";
 import g5 from "@assets/DSCF7659_1779444077969.jpg";
 
+import pfGraphicDesign from "@assets/SnapInsta.to_489861301_17881030953270913_8689388485266757312_n_1779459259140.jpg";
+import pfSocialMedia from "@assets/SnapInsta.to_482226488_122186558996257407_6444128116143349002__1779459284281.jpg";
+import pfPhotography from "@assets/DSC03905_1779459301446.jpg";
+import pfVideo from "@assets/1_unit_rumah_revisi_1779459315228.mp4";
+
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
@@ -592,7 +597,6 @@ function VideoEditingModal({ service, onClose }: { service: Service; onClose: ()
                               style={{ height: "140%", marginTop: "-5%" }}
                               scrolling="no"
                               frameBorder={0}
-                              allowTransparency
                               title={vid.title}
                             />
                           </div>
@@ -1142,8 +1146,70 @@ function ServiceModal({ service, onClose }: { service: Service; onClose: () => v
   );
 }
 
+type PortfolioProject = {
+  category: string;
+  title: string;
+  src: string;
+  type: "image" | "video";
+};
+
+const portfolioProjects: PortfolioProject[] = [
+  { category: "Graphic Design", title: "Sushi Tusuk Campaign", src: pfGraphicDesign, type: "image" },
+  { category: "Social Media Design", title: "Dovi POS — Satu Aplikasi, Banyak Solusi", src: pfSocialMedia, type: "image" },
+  { category: "Photography", title: "Food Photography", src: pfPhotography, type: "image" },
+  { category: "Video Editing", title: "Property Film — 1 Unit Rumah", src: pfVideo, type: "video" },
+];
+
+function PortfolioLightbox({ project, onClose }: { project: PortfolioProject; onClose: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 md:p-8"
+      onClick={onClose}
+    >
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 z-10 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors"
+      >
+        <X className="w-5 h-5" />
+      </button>
+      <motion.div
+        initial={{ scale: 0.92, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.92, opacity: 0 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-5xl w-full max-h-[90vh] flex flex-col items-center gap-4"
+        onClick={e => e.stopPropagation()}
+      >
+        {project.type === "video" ? (
+          <video
+            src={project.src}
+            controls
+            autoPlay
+            className="max-w-full max-h-[80vh] object-contain"
+          />
+        ) : (
+          <img
+            src={project.src}
+            alt={project.title}
+            className="max-w-full max-h-[80vh] object-contain"
+            draggable={false}
+          />
+        )}
+        <div className="text-center">
+          <p className="text-white/50 text-xs uppercase tracking-widest mb-1">{project.category}</p>
+          <h3 className="text-white font-semibold">{project.title}</h3>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function Home() {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [activePortfolio, setActivePortfolio] = useState<PortfolioProject | null>(null);
 
   const services: Service[] = [
     {
@@ -1333,6 +1399,13 @@ export default function Home() {
 
   return (
     <div className="bg-background min-h-screen text-foreground selection:bg-foreground selection:text-background font-sans">
+
+      {/* Portfolio Lightbox */}
+      <AnimatePresence>
+        {activePortfolio && (
+          <PortfolioLightbox project={activePortfolio} onClose={() => setActivePortfolio(null)} />
+        )}
+      </AnimatePresence>
 
       {/* Service Modal */}
       <AnimatePresence>
@@ -1540,54 +1613,94 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {/* Project 1 */}
-          <Reveal className="group relative overflow-hidden aspect-[3/4] bg-muted">
-            <img src={projPortrait} alt="Moody Portrait" className="w-full h-full object-cover filter grayscale transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-              <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Portrait</span>
-              <h3 className="text-2xl font-sans text-background">Moody Portraiture</h3>
-            </div>
+          {/* Card 1 — Graphic Design (portrait) */}
+          <Reveal>
+            <button
+              onClick={() => setActivePortfolio(portfolioProjects[0])}
+              className="group relative overflow-hidden aspect-[3/4] bg-muted w-full block focus:outline-none focus:ring-2 focus:ring-foreground"
+            >
+              <img src={pfGraphicDesign} alt="Graphic Design" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Graphic Design</span>
+                <h3 className="text-2xl font-sans text-background text-left">Sushi Tusuk Campaign</h3>
+              </div>
+              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-full p-2">
+                  <ExternalLink className="w-4 h-4 text-white" />
+                </div>
+              </div>
+            </button>
           </Reveal>
 
-          {/* Project 2 */}
-          <Reveal delay={0.1} className="group relative overflow-hidden aspect-[3/4] bg-muted md:mt-24">
-            <img src={projCommercial} alt="Commercial Product" className="w-full h-full object-cover filter grayscale transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-              <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Commercial</span>
-              <h3 className="text-2xl font-sans text-background">Object Desire</h3>
-            </div>
+          {/* Card 2 — Social Media Design (portrait, offset) */}
+          <Reveal delay={0.1}>
+            <button
+              onClick={() => setActivePortfolio(portfolioProjects[1])}
+              className="group relative overflow-hidden aspect-[3/4] bg-muted w-full block md:mt-24 focus:outline-none focus:ring-2 focus:ring-foreground"
+            >
+              <img src={pfSocialMedia} alt="Social Media Design" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Social Media Design</span>
+                <h3 className="text-2xl font-sans text-background text-left">Dovi POS Campaign</h3>
+              </div>
+              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-full p-2">
+                  <ExternalLink className="w-4 h-4 text-white" />
+                </div>
+              </div>
+            </button>
           </Reveal>
 
-          {/* Project 3 */}
-          <Reveal className="group relative overflow-hidden aspect-square bg-muted md:-mt-24">
-            <img src={projUrban} alt="Urban Street" className="w-full h-full object-cover filter grayscale transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-              <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Street</span>
-              <h3 className="text-2xl font-sans text-background">City Shadows</h3>
-            </div>
+          {/* Card 3 — Photography (landscape, offset up) */}
+          <Reveal>
+            <button
+              onClick={() => setActivePortfolio(portfolioProjects[2])}
+              className="group relative overflow-hidden aspect-video bg-muted w-full block md:-mt-16 focus:outline-none focus:ring-2 focus:ring-foreground"
+            >
+              <img src={pfPhotography} alt="Food Photography" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Photography</span>
+                <h3 className="text-2xl font-sans text-background text-left">Food Photography</h3>
+              </div>
+              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-full p-2">
+                  <ExternalLink className="w-4 h-4 text-white" />
+                </div>
+              </div>
+            </button>
           </Reveal>
 
-          {/* Project 4 */}
-          <Reveal delay={0.1} className="group relative overflow-hidden aspect-video bg-muted md:mt-8">
-            <img src={projCinematic} alt="Cinematic Brand Video" className="w-full h-full object-cover filter grayscale transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-              <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Video</span>
-              <h3 className="text-2xl font-sans text-background">Cinematic Narrative</h3>
-            </div>
-          </Reveal>
-
-          {/* Project 5 */}
-          <Reveal className="group relative overflow-hidden aspect-video bg-muted md:col-span-2">
-            <img src={projLandscape} alt="Landscape Travel" className="w-full h-full object-cover filter grayscale transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-              <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Travel</span>
-              <h3 className="text-2xl font-sans text-background">Vast Horizons</h3>
-            </div>
+          {/* Card 4 — Video Editing (autoplay on hover) */}
+          <Reveal delay={0.1}>
+            <button
+              onClick={() => setActivePortfolio(portfolioProjects[3])}
+              className="group relative overflow-hidden aspect-video bg-muted w-full block md:mt-8 focus:outline-none focus:ring-2 focus:ring-foreground"
+              onMouseEnter={e => e.currentTarget.querySelector("video")?.play()}
+              onMouseLeave={e => { const v = e.currentTarget.querySelector("video"); if (v) { v.pause(); v.currentTime = 0; } }}
+            >
+              <video
+                src={pfVideo}
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              {/* Play icon when idle */}
+              <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300">
+                <div className="bg-black/40 backdrop-blur-sm border border-white/20 rounded-full p-4">
+                  <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6 ml-0.5"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                <span className="inline-block px-3 py-1 bg-background text-foreground text-xs font-medium uppercase tracking-wider mb-3">Video Editing</span>
+                <h3 className="text-2xl font-sans text-background text-left">Property Film</h3>
+              </div>
+            </button>
           </Reveal>
         </div>
       </section>
