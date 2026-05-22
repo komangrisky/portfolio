@@ -1720,7 +1720,7 @@ export default function Home() {
               <img src={avatarImg} alt="Client" className="w-full h-full object-cover filter grayscale blur-md scale-110" />
             </div>
             <div>
-              <p className="font-bold">Anonymous Client</p>
+              <p className="font-bold">Testimony Client</p>
               <p className="text-sm text-muted-foreground">Business Owner</p>
             </div>
           </div>
