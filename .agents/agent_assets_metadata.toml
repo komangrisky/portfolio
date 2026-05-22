@@ -90,3 +90,39 @@ id = "nhAUZ5-vwIDw3vWcCDMKU"
 uri = "file://artifacts/portfolio/src/assets/images/avatar.png"
 type = "image"
 title = "Small circular avatar photo"
+
+[[generated]]
+id = "Hy-6zncdMv8T3gtRDzddt"
+uri = "file://attached_assets/brand_kita_bicara_card.png"
+type = "image"
+title = "kita bicara business card mockup"
+
+[[generated]]
+id = "kDxW41kpLjrXzfl6YjkAw"
+uri = "file://attached_assets/brand_kita_bicara_tote.png"
+type = "image"
+title = "kita bicara tote bag mockup"
+
+[[generated]]
+id = "KClWxkx6z0xw1C_-X_tnR"
+uri = "file://attached_assets/brand_akarasa_stationery.png"
+type = "image"
+title = "akarasa stationery mockup"
+
+[[generated]]
+id = "LhNWahi2A1Nf_arHtcAAb"
+uri = "file://attached_assets/brand_akarasa_tote.png"
+type = "image"
+title = "akarasa tote bag mockup"
+
+[[generated]]
+id = "S0qcOqTesMi5y5e7JZmWO"
+uri = "file://attached_assets/brand_koto_cup.png"
+type = "image"
+title = "koto kopi cup mockup"
+
+[[generated]]
+id = "Xv3vB58PC-6RSzxMaFvyk"
+uri = "file://attached_assets/brand_koto_stationery.png"
+type = "image"
+title = "koto kopi stationery mockup"
