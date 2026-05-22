@@ -280,7 +280,17 @@ function SocialMediaModal({ service, onClose }: { service: Service; onClose: () 
             <div className="text-center">
               <p className="font-semibold text-sm md:text-base tracking-wide">{group?.client}</p>
               {group?.igHandle && (
-                <p className="text-xs text-muted-foreground">@{group.igHandle}</p>
+                <a
+                  href={`https://instagram.com/${group.igHandle}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={e => e.stopPropagation()}
+                  className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors group/ig"
+                >
+                  <Instagram className="w-3 h-3 group-hover/ig:text-pink-500 transition-colors" />
+                  <span>@{group.igHandle}</span>
+                  <ExternalLink className="w-3 h-3 opacity-0 group-hover/ig:opacity-100 transition-opacity" />
+                </a>
               )}
             </div>
             <button onClick={next} className="p-1.5 hover:bg-muted rounded transition-colors">
