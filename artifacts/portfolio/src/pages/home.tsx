@@ -170,7 +170,7 @@ type VideoProject = {
   client: string;
   platform: "instagram" | "youtube" | "vimeo" | "tiktok";
   link: string;
-  thumbnail: string;
+  thumbnail?: string;
 };
 
 type Service = {
@@ -464,6 +464,32 @@ function SocialMediaModal({ service, onClose }: { service: Service; onClose: () 
   );
 }
 
+const getYoutubeId = (url: string): string | null => {
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+  ];
+  for (const p of patterns) {
+    const m = url.match(p);
+    if (m) return m[1];
+  }
+  return null;
+};
+
+const getAutoThumbnail = (platform: VideoProject["platform"], link: string): string | null => {
+  if (platform === "youtube") {
+    const id = getYoutubeId(link);
+    if (id) return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+  }
+  return null;
+};
+
+const platformGradient: Record<VideoProject["platform"], string> = {
+  instagram: "from-purple-600 via-pink-500 to-orange-400",
+  tiktok: "from-black via-[#010101] to-[#EE1D52]",
+  youtube: "from-red-700 to-red-500",
+  vimeo: "from-[#1ab7ea] to-[#0d7fa5]",
+};
+
 const platformIcon = (platform: VideoProject["platform"]) => {
   switch (platform) {
     case "instagram": return (
@@ -549,12 +575,22 @@ function VideoEditingModal({ service, onClose }: { service: Service; onClose: ()
                 >
                   {/* Thumbnail */}
                   <div className="aspect-video bg-muted overflow-hidden">
-                    <img
-                      src={vid.thumbnail}
-                      alt={vid.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      draggable={false}
-                    />
+                    {(() => {
+                      const thumb = vid.thumbnail ?? getAutoThumbnail(vid.platform, vid.link);
+                      return thumb ? (
+                        <img
+                          src={thumb}
+                          alt={vid.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          draggable={false}
+                        />
+                      ) : (
+                        <div className={`w-full h-full bg-gradient-to-br ${platformGradient[vid.platform]} flex flex-col items-center justify-center gap-2 transition-transform duration-500 group-hover:scale-105`}>
+                          <div className="text-white/80">{platformIcon(vid.platform)}</div>
+                          <span className="text-white/60 text-[10px] uppercase tracking-widest font-medium">{vid.platform}</span>
+                        </div>
+                      );
+                    })()}
                   </div>
 
                   {/* Overlay — slides up on hover */}
