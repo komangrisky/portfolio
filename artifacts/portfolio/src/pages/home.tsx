@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ArrowRight, Instagram, Linkedin, Youtube, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Instagram, Linkedin, Youtube, X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
 import heroPortrait from "@/assets/images/hero-portrait.jpg";
 import projPortrait from "@/assets/images/proj-portrait.png";
@@ -13,7 +13,7 @@ import avatarImg from "@/assets/images/avatar.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }
 };
 
 const staggerContainer = {
@@ -37,7 +37,7 @@ function Reveal({ children, className = "", delay = 0 }: { children: React.React
       animate={isInView ? "visible" : "hidden"}
       variants={{
         hidden: { opacity: 0, y: 30 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay } }
+        visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay } }
       }}
       className={className}
     >
@@ -46,17 +46,31 @@ function Reveal({ children, className = "", delay = 0 }: { children: React.React
   );
 }
 
+type ServiceItem = {
+  src: string;
+  caption?: string;
+  link?: string;
+};
+
 type Service = {
   title: string;
   description: string;
-  images: string[];
+  items: ServiceItem[];
   dark: boolean;
 };
 
 function ServiceModal({ service, onClose }: { service: Service; onClose: () => void }) {
   const [current, setCurrent] = useState(0);
-  const prev = () => setCurrent(i => (i - 1 + service.images.length) % service.images.length);
-  const next = () => setCurrent(i => (i + 1) % service.images.length);
+  const total = service.items.length;
+  const activeItem = service.items[current] ?? null;
+
+  const prev = () => setCurrent(i => (i - 1 + total) % total);
+  const next = () => setCurrent(i => (i + 1) % total);
+
+  const handleDragEnd = (_: unknown, info: { offset: { x: number } }) => {
+    if (info.offset.x < -60) next();
+    else if (info.offset.x > 60) prev();
+  };
 
   return (
     <motion.div
@@ -76,32 +90,68 @@ function ServiceModal({ service, onClose }: { service: Service; onClose: () => v
       >
         {/* Modal Header */}
         <div className="flex justify-between items-center p-6 md:p-8 border-b border-border">
-          <h2 className="text-2xl md:text-3xl font-sans font-semibold">{service.title}</h2>
-          <button onClick={onClose} className="p-2 hover:bg-muted transition-colors" data-testid="button-close-modal">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-sans font-semibold">{service.title}</h2>
+            {total > 0 && (
+              <p className="text-xs text-muted-foreground mt-1">{current + 1} / {total}</p>
+            )}
+          </div>
+          <button onClick={onClose} className="p-2 hover:bg-muted transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Main Image Viewer */}
-        <div className="relative bg-muted aspect-video overflow-hidden">
-          {service.images.length > 0 ? (
+        {/* Main Viewer with swipe */}
+        <div className="relative bg-muted overflow-hidden" style={{ aspectRatio: "16/9" }}>
+          {total > 0 && activeItem ? (
             <>
-              <img
-                src={service.images[current]}
-                alt={`${service.title} work ${current + 1}`}
-                className="w-full h-full object-cover"
-              />
-              {service.images.length > 1 && (
+              <motion.div
+                key={current}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={handleDragEnd}
+                className="w-full h-full cursor-grab active:cursor-grabbing select-none"
+              >
+                <img
+                  src={activeItem.src}
+                  alt={activeItem.caption ?? `${service.title} ${current + 1}`}
+                  className="w-full h-full object-cover pointer-events-none"
+                  draggable={false}
+                />
+              </motion.div>
+
+              {/* Link overlay button */}
+              {activeItem.link && (
+                <a
+                  href={activeItem.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute top-4 right-4 flex items-center gap-2 bg-foreground text-background px-3 py-2 text-xs font-medium hover:bg-foreground/80 transition-colors"
+                  onClick={e => e.stopPropagation()}
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  Lihat Konten
+                </a>
+              )}
+
+              {/* Prev / Next arrows */}
+              {total > 1 && (
                 <>
-                  <button onClick={prev} className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/80 p-2 hover:bg-background transition-colors" data-testid="button-prev-image">
+                  <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-2 transition-colors">
                     <ChevronLeft className="w-5 h-5" />
                   </button>
-                  <button onClick={next} className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/80 p-2 hover:bg-background transition-colors" data-testid="button-next-image">
+                  <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background p-2 transition-colors">
                     <ChevronRight className="w-5 h-5" />
                   </button>
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                    {service.images.map((_, i) => (
-                      <button key={i} onClick={() => setCurrent(i)} className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-foreground" : "bg-foreground/30"}`} />
+                  {/* Dots */}
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                    {service.items.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrent(i)}
+                        className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-white" : "bg-white/40"}`}
+                      />
                     ))}
                   </div>
                 </>
@@ -109,27 +159,43 @@ function ServiceModal({ service, onClose }: { service: Service; onClose: () => v
             </>
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center gap-4 text-muted-foreground p-8 text-center">
-              <div className="text-6xl">🖼️</div>
-              <p className="text-lg font-medium">Karya segera hadir</p>
-              <p className="text-sm">File karya kamu untuk kategori ini belum ditambahkan. Lampirkan gambar karya kamu di chat dan saya akan pasangkan di sini.</p>
+              <div className="text-5xl">🖼️</div>
+              <p className="font-medium">Karya segera hadir</p>
+              <p className="text-sm">Lampirkan gambar karya kamu di chat dan saya akan pasangkan di sini.</p>
             </div>
           )}
         </div>
 
-        {/* Thumbnail Strip */}
-        {service.images.length > 1 && (
+        {/* Caption for current item */}
+        {activeItem?.caption && (
+          <div className="px-6 pt-4 pb-0">
+            <p className="text-sm font-medium text-foreground">{activeItem.caption}</p>
+          </div>
+        )}
+
+        {/* Thumbnail strip */}
+        {total > 1 && (
           <div className="flex gap-3 p-6 overflow-x-auto">
-            {service.images.map((img, i) => (
-              <button key={i} onClick={() => setCurrent(i)} className={`shrink-0 w-20 h-20 overflow-hidden border-2 transition-colors ${i === current ? "border-foreground" : "border-transparent"}`} data-testid={`button-thumbnail-${i}`}>
-                <img src={img} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
+            {service.items.map((item, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`relative shrink-0 w-20 h-20 overflow-hidden border-2 transition-colors ${i === current ? "border-foreground" : "border-transparent opacity-60 hover:opacity-100"}`}
+              >
+                <img src={item.src} alt={item.caption ?? `Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
+                {item.link && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                    <ExternalLink className="w-3.5 h-3.5 text-white" />
+                  </div>
+                )}
               </button>
             ))}
           </div>
         )}
 
         {/* Description */}
-        <div className="p-6 md:p-8 pt-0">
-          <p className="text-muted-foreground text-lg leading-relaxed">{service.description}</p>
+        <div className="p-6 md:p-8 pt-2">
+          <p className="text-muted-foreground leading-relaxed">{service.description}</p>
         </div>
       </motion.div>
     </motion.div>
@@ -143,31 +209,31 @@ export default function Home() {
     {
       title: "Graphic Design",
       description: "Creating impactful visuals and meaningful digital experiences that combine creativity and strategy.",
-      images: [],
+      items: [],
       dark: false,
     },
     {
       title: "Social Media Design",
-      description: "Eye-catching social media content and templates designed to grow engagement and strengthen brand presence.",
-      images: [],
+      description: "Eye-catching social media content and templates designed to grow engagement and strengthen brand presence. Klik thumbnail untuk melihat konten asli di media sosial.",
+      items: [],
       dark: true,
     },
     {
       title: "Branding & Logo",
       description: "Strategic brand identity design — from logo creation to full visual systems that make brands memorable.",
-      images: [],
+      items: [],
       dark: true,
     },
     {
       title: "Photography",
       description: "Professional photography capturing authentic moments and compelling visuals for brands and individuals.",
-      images: [],
+      items: [],
       dark: false,
     },
     {
       title: "Video Editing",
-      description: "Cinematic video editing and post-production that tells compelling visual stories with lasting impact.",
-      images: [],
+      description: "Cinematic video editing and post-production that tells compelling visual stories with lasting impact. Klik thumbnail untuk menonton video asli.",
+      items: [],
       dark: false,
     },
   ];
