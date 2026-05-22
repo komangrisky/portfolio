@@ -1429,7 +1429,6 @@ export default function Home() {
           <a href="#about" className="hover:text-foreground transition-colors">About</a>
           <a href="#services" className="hover:text-foreground transition-colors">Services</a>
           <a href="#portfolio" className="hover:text-foreground transition-colors">Portfolio</a>
-          <a href="#blog" className="hover:text-foreground transition-colors">Blog</a>
           <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
         </div>
         <div>
