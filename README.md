@@ -65,6 +65,20 @@ Regenerate API client and Zod types after changing the OpenAPI spec:
 pnpm --filter @workspace/api-spec run codegen
 ```
 
+## Deployment (GitHub Pages)
+
+The portfolio frontend deploys automatically on push to `main` via GitHub Actions.
+
+Live site: [https://komangrisky.github.io/portfolio/](https://komangrisky.github.io/portfolio/)
+
+Build locally for the same base path:
+
+```bash
+PORT=21113 BASE_PATH=/portfolio/ pnpm --filter @workspace/portfolio run build
+```
+
+Output is written to `artifacts/portfolio/dist/public/`.
+
 ## Stack
 
 React 19 · Vite 7 · Tailwind CSS 4 · Express 5 · PostgreSQL · Drizzle · Zod · TanStack Query
