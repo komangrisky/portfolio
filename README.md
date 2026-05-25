@@ -65,19 +65,58 @@ Regenerate API client and Zod types after changing the OpenAPI spec:
 pnpm --filter @workspace/api-spec run codegen
 ```
 
-## Deployment (GitHub Pages)
-
-The portfolio frontend deploys automatically on push to `main` via GitHub Actions.
+## Deploy
 
 Live site: [https://komangrisky.github.io/portfolio/](https://komangrisky.github.io/portfolio/)
 
-Build locally for the same base path:
+The portfolio is published with **Deploy from a branch** (not GitHub Actions). The script `scripts/deploy.sh` builds the app and force-pushes the output to the `gh-pages` branch.
+
+### One-time setup
+
+1. Push this repo to GitHub as `komangrisky/portfolio` (repo name must be `portfolio` for the `/portfolio/` URL).
+2. **Settings** → **Pages** → **Build and deployment** → **Source**: **Deploy from a branch**.
+3. **Branch**: `gh-pages`, **Folder**: `/ (root)` → **Save**.
+4. Disable `.github/workflows/deploy-pages.yml` (or set Pages source to something other than GitHub Actions) so it does not conflict with branch deploy.
+
+### Deploy (every update)
+
+From the repo root:
+
+```bash
+pnpm install
+./scripts/deploy.sh
+```
+
+The first time, make the script executable:
+
+```bash
+chmod +x scripts/deploy.sh
+```
+
+What `deploy.sh` does:
+
+1. Builds `@workspace/portfolio` with `BASE_PATH=/portfolio/`
+2. Copies `index.html` to `404.html` for client-side routing
+3. Pushes `artifacts/portfolio/dist/public/` to the `gh-pages` branch
+
+Push application code to `main` separately when needed:
+
+```bash
+git add .
+git commit -m "Your change"
+git push origin main
+./scripts/deploy.sh
+```
+
+Wait 1–3 minutes after `./scripts/deploy.sh`, then open the live URL.
+
+### Local build only
 
 ```bash
 PORT=21113 BASE_PATH=/portfolio/ pnpm --filter @workspace/portfolio run build
 ```
 
-Output is written to `artifacts/portfolio/dist/public/`.
+Output: `artifacts/portfolio/dist/public/`
 
 ## Stack
 
